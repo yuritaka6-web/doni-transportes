@@ -6,7 +6,6 @@
     <title>Sobre Nós | Doni Transportes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Os mesmos estilos base importados do index */
         :root { --green: #00ff66; --green-hover: #1be05d; --dark: #0f0f0f; --darker: #080808; --card-bg: #161616; --text-light: #ffffff; --text-muted: #aaaaaa; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background-color: var(--dark); color: var(--text-light); line-height: 1.6; }
@@ -16,11 +15,11 @@
         .logo { font-size: 28px; font-weight: 800; text-transform: uppercase; line-height: 1; display: flex; flex-direction: column; }
         .logo span { color: var(--green); }
         .logo small { font-size: 14px; color: var(--text-light); font-weight: 400; letter-spacing: 3px; }
+        
         nav ul { list-style: none; display: flex; gap: 25px; }
         nav a { font-weight: 500; font-size: 0.95rem; transition: 0.3s; }
         nav a:hover, nav a.active { color: var(--green); }
 
-        /* Estilo Específico da Página Sobre */
         .about-section { padding: 150px 8% 80px; min-height: 70vh; display: flex; flex-direction: column; align-items: center; text-align: center; }
         .about-content { max-width: 800px; background-color: var(--card-bg); padding: 50px; border-radius: 12px; border-top: 4px solid var(--green); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .about-content h1 { font-size: 2.8rem; margin-bottom: 30px; }
@@ -33,7 +32,7 @@
         footer { background-color: var(--darker); padding: 40px 8%; text-align: center; border-top: 1px solid #1a1a1a; margin-top: auto; }
         .copyright { color: #555; font-size: 0.85rem; }
 
-        /* Estilos do Modal idênticos */
+        /* Modal */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .modal-content { background: var(--card-bg); padding: 40px; border-radius: 12px; width: 90%; max-width: 450px; position: relative; border-top: 4px solid var(--green); text-align: left; }
         .modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-muted); }
@@ -54,9 +53,10 @@
         <div class="logo"><span>Doni</span><small>TRANSPORTES</small></div>
         <nav>
             <ul>
+                <!-- Link corrigido para a página de serviços -->
                 <li><a href="index.html">Início</a></li>
                 <li><a href="sobre.html" class="active">Sobre Nós</a></li>
-                <li><a href="index.html#frota">Serviços & Frota</a></li>
+                <li><a href="servicos.html">Serviços & Frota</a></li>
             </ul>
         </nav>
     </header>
@@ -79,7 +79,7 @@
         <p class="copyright">&copy; 2026 Doni Transportes. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- Pop-up (Modal) idêntico ao do index -->
+    <!-- Pop-up (Modal) -->
     <div id="contactModal" class="modal-overlay">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
@@ -94,18 +94,21 @@
         </div>
     </div>
 
-    <!-- Script idêntico -->
+    <!-- Script -->
     <script>
         function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('contactModal').style.display = 'none'; }
         window.onclick = function(event) { if (event.target == document.getElementById('contactModal')) closeModal(); }
+        
         function sendWhatsApp(event) {
             event.preventDefault();
             const nome = document.getElementById('nome').value;
             const email = document.getElementById('email').value;
             const telefone = document.getElementById('telefone').value;
             const phoneNumber = "5516997843621";
+            
             const message = `*POTENCIAL NOVO CLIENTE*\n\n*Nome:* ${nome}\n*E-mail:* ${email}\n*Telefone:* ${telefone}\n\nOlá, gostaria de saber mais informações sobre os serviços da Doni Transportes.`;
+            
             window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
             closeModal();
             document.querySelector('.modal-form').reset();
