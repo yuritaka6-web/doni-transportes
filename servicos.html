@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços e Frota | Doni Transportes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --green: #00ff66; --green-hover: #1be05d; --dark: #0f0f0f; --darker: #080808; --card-bg: #161616; --text-light: #ffffff; --text-muted: #aaaaaa; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--dark); color: var(--text-light); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        
+        header { background-color: rgba(8, 8, 8, 0.95); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--green); }
+        .logo { font-size: 28px; font-weight: 800; text-transform: uppercase; line-height: 1; display: flex; flex-direction: column; }
+        .logo span { color: var(--green); }
+        .logo small { font-size: 14px; color: var(--text-light); font-weight: 400; letter-spacing: 3px; }
+        nav ul { list-style: none; display: flex; gap: 25px; }
+        nav a { font-weight: 500; font-size: 0.95rem; transition: 0.3s; }
+        nav a:hover, nav a.active { color: var(--green); }
+
+        /* Layout Experimental de Serviços */
+        .services-header { text-align: center; padding: 150px 8% 50px; background-color: var(--darker); }
+        .services-header h1 { font-size: 3rem; margin-bottom: 15px; }
+        .services-header h1 span { color: var(--green); }
+        .services-header p { color: var(--text-muted); font-size: 1.2rem; max-width: 700px; margin: 0 auto; }
+
+        .feature-block { display: flex; align-items: center; padding: 80px 8%; gap: 50px; border-bottom: 1px solid #1a1a1a; }
+        .feature-block:nth-child(even) { flex-direction: row-reverse; background-color: var(--card-bg); }
+        
+        .feature-text { flex: 1; }
+        .feature-text h2 { font-size: 2.2rem; margin-bottom: 20px; color: #fff; }
+        .feature-text p { font-size: 1.1rem; color: #ccc; margin-bottom: 25px; line-height: 1.8; }
+        
+        .feature-img-wrapper { flex: 1; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 2px solid #222; }
+        .feature-img-wrapper img { width: 100%; height: auto; display: block; transition: 0.5s; }
+        .feature-img-wrapper:hover img { transform: scale(1.05); }
+
+        .btn { background-color: var(--green); color: #000; padding: 14px 30px; font-size: 1.05rem; font-weight: 700; border-radius: 50px; border: none; cursor: pointer; transition: 0.3s ease; display: inline-flex; align-items: center; gap: 10px; }
+        .btn:hover { background-color: var(--green-hover); transform: translateY(-2px); }
+
+        footer { background-color: var(--darker); padding: 40px 8%; text-align: center; border-top: 1px solid #1a1a1a; }
+        .copyright { color: #555; font-size: 0.85rem; }
+
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: var(--card-bg); padding: 40px; border-radius: 12px; width: 90%; max-width: 450px; position: relative; border-top: 4px solid var(--green); text-align: left; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-muted); }
+        .modal-close:hover { color: #fff; }
+        .modal-content h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
+        .modal-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+        .modal-form { display: flex; flex-direction: column; gap: 15px; }
+        .modal-form input { padding: 14px; border-radius: 6px; border: 1px solid #333; background: #222; color: #fff; font-size: 1rem; }
+        .modal-form button { background: var(--green); color: #000; padding: 14px; font-weight: bold; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        .modal-form button:hover { background: var(--green-hover); }
+
+        @media (max-width: 768px) { nav { display: none; } .feature-block, .feature-block:nth-child(even) { flex-direction: column; text-align: center; padding: 50px 5%; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><span>Doni</span><small>TRANSPORTES</small></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="sobre.html">Sobre Nós</a></li>
+                <li><a href="servicos.html" class="active">Serviços & Frota</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="services-header">
+        <h1>Nossas <span>Soluções</span></h1>
+        <p>Conheça a infraestrutura e os serviços logísticos que movem o seu negócio.</p>
+    </div>
+
+    <!-- Bloco 1 -->
+    <section class="feature-block">
+        <div class="feature-text">
+            <h2>Cargas Rápidas e Agenciamento</h2>
+            <p>Especialistas em compra e venda de fretes. Gerenciamos a logística de ponta a ponta com alta performance, garantindo que sua operação se mantenha em movimento sem atrasos ou burocracias desnecessárias.</p>
+            <button onclick="openModal()" class="btn"><i class="fab fa-whatsapp"></i> Cotar Frete</button>
+        </div>
+        <div class="feature-img-wrapper">
+            <img src="caminhaolado.jpeg" alt="Caminhão Doni Transportes - Cargas Rápidas">
+        </div>
+    </section>
+
+    <!-- Bloco 2 -->
+    <section class="feature-block">
+        <div class="feature-text">
+            <h2>Amplo Espaço Volumétrico</h2>
+            <p>Nossos baús são projetados para otimização espacial. Capacidade maximizada de carga em veículos adequados, o que significa maior custo-benefício e eficiência no transporte da sua mercadoria.</p>
+            <button onclick="openModal()" class="btn"><i class="fab fa-whatsapp"></i> Ver Disponibilidade</button>
+        </div>
+        <div class="feature-img-wrapper">
+            <img src="caminhaobau.jpeg" alt="Interior do Baú do Caminhão">
+        </div>
+    </section>
+
+    <!-- Bloco 3 -->
+    <section class="feature-block">
+        <div class="feature-text">
+            <h2>Segurança Monitorada</h2>
+            <p>Com frota própria rigorosamente mantida e monitorada, asseguramos que cada remessa seja tratada com cuidado cirúrgico. Logística inteligente para que a sua carga chegue intacta ao destino final.</p>
+            <button onclick="openModal()" class="btn"><i class="fab fa-whatsapp"></i> Falar com Especialista</button>
+        </div>
+        <div class="feature-img-wrapper">
+            <img src="caminhao2.jpeg" alt="Frota no Pátio">
+        </div>
+    </section>
+
+    <footer>
+        <p class="copyright">&copy; 2026 Doni Transportes. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Pop-up (Modal) -->
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3>Fale com um Especialista</h3>
+            <p>Preencha os dados abaixo e entraremos em contato diretamente pelo WhatsApp.</p>
+            <form class="modal-form" onsubmit="sendWhatsApp(event)">
+                <input type="text" id="nome" placeholder="Seu Nome / Empresa" required>
+                <input type="email" id="email" placeholder="Seu E-mail" required>
+                <input type="tel" id="telefone" placeholder="Telefone / WhatsApp" required>
+                <button type="submit">Iniciar Conversa</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('contactModal').style.display = 'none'; }
+        window.onclick = function(event) { if (event.target == document.getElementById('contactModal')) closeModal(); }
+        function sendWhatsApp(event) {
+            event.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const telefone = document.getElementById('telefone').value;
+            const phoneNumber = "5516997843621";
+            const message = `*POTENCIAL NOVO CLIENTE*\n\n*Nome:* ${nome}\n*E-mail:* ${email}\n*Telefone:* ${telefone}\n\nOlá, gostaria de saber mais informações sobre os serviços da Doni Transportes.`;
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+            closeModal();
+            document.querySelector('.modal-form').reset();
+        }
+    </script>
+</body>
+</html>
