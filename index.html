@@ -12,72 +12,90 @@
             --text-light: #ffffff; --text-muted: #aaaaaa;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
-        body { background-color: var(--dark); color: var(--text-light); line-height: 1.6; }
+        body { background-color: var(--dark); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
         
-        header { background-color: rgba(8, 8, 8, 0.95); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--green); }
-        .logo { font-size: 28px; font-weight: 800; text-transform: uppercase; line-height: 1; display: flex; flex-direction: column; }
+        /* Cabeçalho */
+        header { background-color: rgba(8, 8, 8, 0.98); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--green); }
+        .logo { font-size: 26px; font-weight: 800; text-transform: uppercase; line-height: 1; display: flex; flex-direction: column; }
         .logo span { color: var(--green); }
-        .logo small { font-size: 14px; color: var(--text-light); font-weight: 400; letter-spacing: 3px; }
+        .logo small { font-size: 12px; color: var(--text-light); font-weight: 400; letter-spacing: 3px; }
+        
+        /* Menu Desktop */
         nav ul { list-style: none; display: flex; gap: 25px; }
         nav a { font-weight: 500; font-size: 0.95rem; transition: 0.3s; }
         nav a:hover, nav a.active { color: var(--green); }
 
+        /* Botão Mobile (Menu Hambúrguer) */
+        .menu-toggle { display: none; color: var(--green); font-size: 1.8rem; cursor: pointer; }
+
+        /* Seção Principal */
         .hero { min-height: 100vh; background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), url('caminhaofrentepla.jpeg') center/cover no-repeat; display: flex; flex-direction: column; justify-content: center; padding: 100px 8%; }
         .hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; max-width: 800px; }
         .hero h1 span { color: var(--green); }
         .hero p { font-size: 1.2rem; max-width: 600px; margin-bottom: 30px; color: #ccc; }
         
-        /* NOVO BOTÃO REDUZIDO (APENAS ÍCONE) */
+        /* Botão Reduzido */
         .btn-icon-only { 
-            background-color: var(--green); 
-            color: #000; 
-            width: 65px; 
-            height: 65px; 
-            font-size: 2rem; 
-            border-radius: 50%; 
-            display: inline-flex; 
-            justify-content: center; 
-            align-items: center; 
-            border: none; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.3);
+            background-color: var(--green); color: #000; width: 65px; height: 65px; font-size: 2rem; border-radius: 50%; 
+            display: inline-flex; justify-content: center; align-items: center; border: none; cursor: pointer; 
+            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 255, 102, 0.3); flex-shrink: 0;
         }
-        .btn-icon-only:hover { 
-            background-color: var(--green-hover); 
-            transform: scale(1.1); 
-            box-shadow: 0 6px 20px rgba(0, 255, 102, 0.5);
-        }
+        .btn-icon-only:hover { background-color: var(--green-hover); transform: scale(1.1); box-shadow: 0 6px 20px rgba(0, 255, 102, 0.5); }
         
+        /* Rodapé */
         footer { background-color: var(--dark); padding: 60px 8% 40px; border-top: 1px solid #1a1a1a; }
         .footer-container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; margin-bottom: 40px; }
-        .btn-footer { padding: 14px 28px; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; border: none; transition: 0.3s; font-size: 1rem; }
+        .btn-footer { padding: 14px 28px; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; border: none; transition: 0.3s; font-size: 1rem; width: 100%; justify-content: center; }
         .btn-whatsapp { background-color: var(--green); color: #000; }
         .btn-whatsapp:hover { background-color: var(--green-hover); }
         .copyright { text-align: center; color: #555; font-size: 0.85rem; border-top: 1px solid #1c1c1c; padding-top: 25px; }
 
         /* Pop-up Modal */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: var(--card-bg); padding: 40px; border-radius: 12px; width: 90%; max-width: 450px; position: relative; border-top: 4px solid var(--green); }
-        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-muted); }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 15px; }
+        .modal-content { background: var(--card-bg); padding: 40px; border-radius: 12px; width: 100%; max-width: 450px; position: relative; border-top: 4px solid var(--green); max-height: 90vh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; color: var(--text-muted); }
         .modal-close:hover { color: #fff; }
         .modal-content h3 { font-size: 1.5rem; margin-bottom: 10px; }
         .modal-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
         .modal-form { display: flex; flex-direction: column; gap: 15px; }
-        .modal-form input { padding: 14px; border-radius: 6px; border: 1px solid #333; background: #222; color: #fff; font-size: 1rem; }
+        .modal-form input { padding: 14px; border-radius: 6px; border: 1px solid #333; background: #222; color: #fff; font-size: 1rem; width: 100%; }
         .modal-form input:focus { outline: 1px solid var(--green); }
-        .modal-form button { background: var(--green); color: #000; padding: 14px; font-weight: bold; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        .modal-form button { background: var(--green); color: #000; padding: 14px; font-weight: bold; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; width: 100%; }
         .modal-form button:hover { background: var(--green-hover); }
 
-        @media (max-width: 768px) { nav { display: none; } .hero h1 { font-size: 2.3rem; } .footer-container { flex-direction: column; align-items: flex-start; } }
+        /* AJUSTES PARA CELULAR (RESPONSIVIDADE) */
+        @media (max-width: 768px) { 
+            .menu-toggle { display: block; } /* Mostra o ícone de hambúrguer */
+            
+            nav { display: none; width: 100%; position: absolute; top: 100%; left: 0; background-color: rgba(8, 8, 8, 0.98); border-bottom: 2px solid var(--green); padding: 20px 5%; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+            nav.active { display: block; } /* Classe adicionada via JavaScript */
+            nav ul { flex-direction: column; gap: 20px; text-align: center; }
+            nav a { font-size: 1.1rem; display: block; padding: 10px 0; }
+
+            .hero { padding: 120px 5% 60px; text-align: center; align-items: center; min-height: auto; } /* Impede que corte no celular */
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; margin-bottom: 40px; }
+            
+            .footer-container { flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+            .footer-container div { width: 100%; }
+            
+            .modal-content { padding: 25px 20px; } /* Ajusta modal para não ocupar a tela toda inutilmente */
+            .modal-content h3 { font-size: 1.3rem; }
+        }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo"><span>Doni</span><small>TRANSPORTES</small></div>
-        <nav>
+        
+        <!-- Ícone de Menu para Celular -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav id="menu">
             <ul>
                 <li><a href="index.html" class="active">Início</a></li>
                 <li><a href="sobre.html">Sobre Nós</a></li>
@@ -102,7 +120,7 @@
                 <div class="logo"><span>Doni</span><small>TRANSPORTES</small></div>
                 <p style="color: var(--text-muted); margin-top: 10px;">Fale conosco através dos canais abaixo:</p>
             </div>
-            <div style="display: flex; gap: 15px;">
+            <div>
                 <button onclick="openModal()" class="btn-footer btn-whatsapp"><i class="fab fa-whatsapp"></i> Contate-nos via WhatsApp</button>
             </div>
         </div>
@@ -114,7 +132,7 @@
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
             <h3>Fale com um Especialista</h3>
-            <p>Preencha os dados abaixo e entraremos em contato diretamente pelo WhatsApp.</p>
+            <p>Preencha os dados e entraremos em contato via WhatsApp.</p>
             
             <form class="modal-form" onsubmit="sendWhatsApp(event)">
                 <input type="text" id="nome" placeholder="Seu Nome / Empresa" required>
@@ -125,11 +143,20 @@
         </div>
     </div>
 
+    <!-- Scripts (Menu Mobile e Modal) -->
     <script>
+        // Função para abrir/fechar o menu no celular
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+
+        // Funções do Modal
         function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('contactModal').style.display = 'none'; }
         window.onclick = function(event) { if (event.target == document.getElementById('contactModal')) closeModal(); }
         
+        // Função do WhatsApp
         function sendWhatsApp(event) {
             event.preventDefault();
             const nome = document.getElementById('nome').value;
