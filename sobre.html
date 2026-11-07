@@ -8,17 +8,22 @@
     <style>
         :root { --green: #00ff66; --green-hover: #1be05d; --dark: #0f0f0f; --darker: #080808; --card-bg: #161616; --text-light: #ffffff; --text-muted: #aaaaaa; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--dark); color: var(--text-light); line-height: 1.6; }
+        body { background-color: var(--dark); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
         
-        header { background-color: rgba(8, 8, 8, 0.95); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--green); }
-        .logo { font-size: 28px; font-weight: 800; text-transform: uppercase; line-height: 1; display: flex; flex-direction: column; }
+        /* Cabeçalho */
+        header { background-color: rgba(8, 8, 8, 0.98); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--green); }
+        .logo { font-size: 26px; font-weight: 800; text-transform: uppercase; line-height: 1; display: flex; flex-direction: column; }
         .logo span { color: var(--green); }
-        .logo small { font-size: 14px; color: var(--text-light); font-weight: 400; letter-spacing: 3px; }
+        .logo small { font-size: 12px; color: var(--text-light); font-weight: 400; letter-spacing: 3px; }
         
+        /* Menu Desktop */
         nav ul { list-style: none; display: flex; gap: 25px; }
         nav a { font-weight: 500; font-size: 0.95rem; transition: 0.3s; }
         nav a:hover, nav a.active { color: var(--green); }
+
+        /* Botão Mobile */
+        .menu-toggle { display: none; color: var(--green); font-size: 1.8rem; cursor: pointer; }
 
         .about-section { padding: 150px 8% 80px; min-height: 70vh; display: flex; flex-direction: column; align-items: center; text-align: center; }
         .about-content { max-width: 800px; background-color: var(--card-bg); padding: 50px; border-radius: 12px; border-top: 4px solid var(--green); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -32,28 +37,48 @@
         footer { background-color: var(--darker); padding: 40px 8%; text-align: center; border-top: 1px solid #1a1a1a; margin-top: auto; }
         .copyright { color: #555; font-size: 0.85rem; }
 
-        /* Modal */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: var(--card-bg); padding: 40px; border-radius: 12px; width: 90%; max-width: 450px; position: relative; border-top: 4px solid var(--green); text-align: left; }
-        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-muted); }
+        /* Pop-up Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; padding: 15px; }
+        .modal-content { background: var(--card-bg); padding: 40px; border-radius: 12px; width: 100%; max-width: 450px; position: relative; border-top: 4px solid var(--green); text-align: left; max-height: 90vh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; color: var(--text-muted); }
         .modal-close:hover { color: #fff; }
         .modal-content h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
         .modal-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
         .modal-form { display: flex; flex-direction: column; gap: 15px; }
-        .modal-form input { padding: 14px; border-radius: 6px; border: 1px solid #333; background: #222; color: #fff; font-size: 1rem; }
-        .modal-form button { background: var(--green); color: #000; padding: 14px; font-weight: bold; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        .modal-form input { padding: 14px; border-radius: 6px; border: 1px solid #333; background: #222; color: #fff; font-size: 1rem; width: 100%; }
+        .modal-form input:focus { outline: 1px solid var(--green); }
+        .modal-form button { background: var(--green); color: #000; padding: 14px; font-weight: bold; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; width: 100%; }
         .modal-form button:hover { background: var(--green-hover); }
 
-        @media (max-width: 768px) { nav { display: none; } .about-content { padding: 30px 20px; } }
+        /* Responsividade Telemóvel */
+        @media (max-width: 768px) { 
+            .menu-toggle { display: block; }
+            nav { display: none; width: 100%; position: absolute; top: 100%; left: 0; background-color: rgba(8, 8, 8, 0.98); border-bottom: 2px solid var(--green); padding: 20px 5%; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+            nav.active { display: block; }
+            nav ul { flex-direction: column; gap: 20px; text-align: center; }
+            nav a { font-size: 1.1rem; display: block; padding: 10px 0; }
+            
+            .about-section { padding: 120px 5% 60px; }
+            .about-content { padding: 30px 20px; }
+            .about-content h1 { font-size: 2.2rem; }
+            .about-content p { font-size: 1rem; text-align: left; }
+            
+            .modal-content { padding: 25px 20px; }
+            .modal-content h3 { font-size: 1.3rem; }
+        }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo"><span>Doni</span><small>TRANSPORTES</small></div>
-        <nav>
+        
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav id="menu">
             <ul>
-                <!-- Link corrigido para a página de serviços -->
                 <li><a href="index.html">Início</a></li>
                 <li><a href="sobre.html" class="active">Sobre Nós</a></li>
                 <li><a href="servicos.html">Serviços & Frota</a></li>
@@ -65,11 +90,11 @@
         <div class="about-content">
             <h1>Sobre a <span>Doni</span></h1>
             
-            <p>A Doni Transportes é uma empresa forjada na <strong>confiança e no compromisso rigoroso</strong> com a sua carga. Entendemos que a logística é o coração de qualquer negócio, e nossa missão é garantir que seus prazos e integridade sejam mantidos de ponta a ponta.</p>
+            <p>A Doni Transportes é uma empresa forjada na <strong>confiança e no compromisso rigoroso</strong> com a sua carga. Entendemos que a logística é o coração de qualquer negócio, e nossa missão é garantir que os seus prazos e a integridade da carga sejam mantidos de ponta a ponta.</p>
             
-            <p>Nossa operação é fundamentada em agilidade e controle. Atuamos fortemente na <strong>compra e venda inteligente de fretes</strong> (agenciamento logístico), otimizando rotas e reduzindo custos operacionais para nossos clientes.</p>
+            <p>A nossa operação é fundamentada em agilidade e controlo. Atuamos fortemente na <strong>compra e venda inteligente de fretes</strong> (agenciamento logístico), otimizando rotas e reduzindo custos operacionais para os nossos clientes.</p>
 
-            <p>Para assegurar excelência na execução, contamos também com infraestrutura dedicada, possuindo uma <strong>frota própria de 2 caminhões modernos e totalmente monitorados</strong>. Essa estrutura enxuta nos permite oferecer atendimento ágil, direto e personalizado, adaptando nossas soluções ao que a sua empresa realmente necessita.</p>
+            <p>Para assegurar excelência na execução, contamos também com infraestrutura dedicada, possuindo uma <strong>frota própria de 2 camiões modernos e totalmente monitorizados</strong>. Esta estrutura enxuta permite-nos oferecer um atendimento ágil, direto e personalizado, adaptando as nossas soluções ao que a sua empresa realmente necessita.</p>
 
             <button onclick="openModal()" class="btn">Solicitar Orçamento</button>
         </div>
@@ -84,18 +109,23 @@
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
             <h3>Fale com um Especialista</h3>
-            <p>Preencha os dados abaixo e entraremos em contato diretamente pelo WhatsApp.</p>
+            <p>Preencha os dados abaixo e entraremos em contacto diretamente pelo WhatsApp.</p>
             <form class="modal-form" onsubmit="sendWhatsApp(event)">
-                <input type="text" id="nome" placeholder="Seu Nome / Empresa" required>
-                <input type="email" id="email" placeholder="Seu E-mail" required>
+                <input type="text" id="nome" placeholder="O seu Nome / Empresa" required>
+                <input type="email" id="email" placeholder="O seu E-mail" required>
                 <input type="tel" id="telefone" placeholder="Telefone / WhatsApp" required>
                 <button type="submit">Iniciar Conversa</button>
             </form>
         </div>
     </div>
 
-    <!-- Script -->
+    <!-- Scripts -->
     <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+
         function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('contactModal').style.display = 'none'; }
         window.onclick = function(event) { if (event.target == document.getElementById('contactModal')) closeModal(); }
