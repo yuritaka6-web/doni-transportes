@@ -2,7 +2,7 @@
 
 Migração Python em 20/11/2026. Governança e especificação precederam o código desta migração; backend anterior e suas evidências permanecem no histórico.
 
-- pytest: 27 testes passaram, sem falhas, usando banco SQLite isolado por cenário.
+- pytest: 28 testes passaram, sem falhas, usando banco SQLite isolado por cenário.
 - Contrato v2: 14 operações, 22 schemas, corpos/respostas referenciados, exemplos validados e exportação comparada ao runtime.
 - JWT: assinatura, emissor/audiência, expiração, ausência/invalidade, RBAC ADMIN/MEMBER e senhas scrypt.
 - ORM: SQLAlchemy 2.0, colunas tipadas, ForeignKey/relationship 1:N, selectinload com contagem de queries, paginação, persistência após reiniciar e rollback de pedido/contato/outbox.
@@ -24,6 +24,8 @@ Implantação validada na nuvem com API Python no Render, PostgreSQL e proxy/web
 - Teste pelo navegador no formulário comercial: protocolo 35941f7c-b681-4818-9c90-d004cbd50ceb, outbox ENVIADO em uma tentativa e recibo Delivered no Resend. Dados fictícios identificados como teste; não representam frete real.
 - Migração para PostgreSQL preservou o cliente e orçamento locais e o hash da conta do autor. O hash foi comparado sem exibir seu valor; nenhuma senha precisou ser alterada.
 - Bootstrap de usuário retirado das variáveis do Render após importação. Chave Resend possui apenas Sending access e não foi publicada.
-- 27 testes pytest e 1 teste do proxy passaram. Auditoria de dependências Python não reportou vulnerabilidades conhecidas na revisão verificada.
+- 28 testes pytest e 1 teste do proxy passaram. Auditoria de dependências Python não reportou vulnerabilidades conhecidas na revisão verificada.
 
 O plano gratuito permanece sujeito à ociosidade e ao vencimento do PostgreSQL em 20/12/2026. A confirmação Delivered informa aceitação pelo servidor de destino, sem comprovar leitura humana ou localização na caixa principal. O trabalho permanece de autoria individual.
+
+- Respostas reais POST/GET/listagem são validadas contra os schemas, incluindo date-time RFC 3339 com UTC após leitura do SQLite.

@@ -24,3 +24,18 @@ def test_contract_components_examples_and_security(client, app):
     exported = json.loads((Path(__file__).resolve().parents[3] / "docs/openapi-v2.json").read_text(encoding="utf-8"))
     assert spec == exported
     assert client.get("/openapi.json").status_code == 200
+
+
+def test_runtime_responses_match_contract_including_utc(client, app, accounts, contact, cargo):
+    components = app.openapi()["components"]
+    def valid(name, payload):
+        Draft202012Validator({"$ref":"#/components/schemas/" + name,"components":components}, format_checker=FormatChecker()).validate(payload)
+    headers = accounts["ADMIN"]["headers"]
+    person = client.post("/api/v1/clientes", json=contact, headers=headers).json()
+    valid("Cliente", person)
+    valid("Cliente", client.get("/api/v1/clientes/" + person["id"], headers=headers).json())
+    order = client.post("/api/v1/solicitacoes-orcamento", json={**cargo,"clienteId":person["id"]}, headers=headers).json()
+    valid("SolicitacaoOrcamento", order)
+    valid("SolicitacaoOrcamento", client.get("/api/v1/solicitacoes-orcamento/" + order["id"], headers=headers).json())
+    valid("ListaClientes", client.get("/api/v1/clientes", headers=headers).json())
+    valid("ListaSolicitacoes", client.get("/api/v1/solicitacoes-orcamento", headers=headers).json())

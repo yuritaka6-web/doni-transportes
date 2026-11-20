@@ -1,12 +1,18 @@
 from .models import ClienteModel, SolicitacaoModel
+from datetime import timezone
+
+
+def utc(value):
+    # SQLite não preserva o offset de DateTime; o domínio armazena sempre UTC.
+    return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value.astimezone(timezone.utc)
 
 
 def cliente_view(row):
-    return {"id": row.id, "nome": row.nome, "email": row.email, "telefone": row.telefone, "tipoPessoa": row.tipo_pessoa, "criadoEm": row.criado_em, "atualizadoEm": row.atualizado_em}
+    return {"id": row.id, "nome": row.nome, "email": row.email, "telefone": row.telefone, "tipoPessoa": row.tipo_pessoa, "criadoEm": utc(row.criado_em), "atualizadoEm": utc(row.atualizado_em)}
 
 
 def quote_view(row):
-    return {"id": row.id, "clienteId": row.cliente_id, "origem": {"cidade": row.origem_cidade, "uf": row.origem_uf}, "destino": {"cidade": row.destino_cidade, "uf": row.destino_uf}, "descricaoCarga": row.descricao_carga, "pesoKg": row.peso_kg, "dataColeta": row.data_coleta, "observacoes": row.observacoes, "status": row.status, "statusEmail": row.notificacao.status if row.notificacao else "PENDENTE", "criadoEm": row.criado_em, "atualizadoEm": row.atualizado_em}
+    return {"id": row.id, "clienteId": row.cliente_id, "origem": {"cidade": row.origem_cidade, "uf": row.origem_uf}, "destino": {"cidade": row.destino_cidade, "uf": row.destino_uf}, "descricaoCarga": row.descricao_carga, "pesoKg": row.peso_kg, "dataColeta": row.data_coleta, "observacoes": row.observacoes, "status": row.status, "statusEmail": row.notificacao.status if row.notificacao else "PENDENTE", "criadoEm": utc(row.criado_em), "atualizadoEm": utc(row.atualizado_em)}
 
 
 def user_view(row):
