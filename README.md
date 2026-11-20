@@ -40,6 +40,6 @@ POST /api/v1/auth/login recebe email/password e devolve accessToken/tokenType/ex
 
 ## Notificações e hospedagem
 
-HTTPS FormSubmit contorna o bloqueio SMTP do Render gratuito; exige ativação inicial do destinatário. SMTP TLS está disponível para ambientes compatíveis. Outbox usa lease/backoff e não reenvia por PATCH. Aceitação pelo fornecedor não garante leitura ou caixa principal; falhas ambíguas podem duplicar uma notificação.
+A API HTTPS do Resend contorna o bloqueio SMTP do Render gratuito; a chave fica somente no servidor. O remetente inicial onboarding@resend.dev entrega exclusivamente ao e-mail verificado do responsável. Para outros destinatários, verifique um domínio no provedor. SMTP TLS está disponível para ambientes compatíveis. Outbox usa lease/backoff e não reenvia por PATCH. Aceitação pelo fornecedor não garante leitura ou caixa principal; o Resend usa chave de idempotência por protocolo durante 24 horas para reduzir duplicações; fora dessa janela, uma falha ambígua ainda pode duplicar a notificação.
 
 A API gratuita pode levar cerca de um minuto para iniciar após ociosidade. O PostgreSQL gratuito expira em 30 dias, exigindo exportação/migração antes do vencimento. Nenhum banco fica no disco efêmero. Credenciais e bootstrap não entram no Git. A implementação Node anterior permanece no histórico; a API atual é Python.

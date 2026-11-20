@@ -4,6 +4,7 @@ import os
 import smtplib
 import ssl
 import time
+from html import escape
 from email.message import EmailMessage
 from urllib.parse import quote
 import httpx
@@ -33,10 +34,23 @@ class MailTransport:
 
     @property
     def ready(self):
+        if self.mode == "resend":
+            return bool(os.getenv("RESEND_API_KEY") and os.getenv("MAIL_FROM"))
         return self.mode == "formsubmit" or bool(os.getenv("SMTP_HOST") and os.getenv("SMTP_USER") and os.getenv("SMTP_PASS"))
 
     def send(self, snapshot):
         fields = message_fields(snapshot)
+        if self.mode == "resend":
+            text = "DONI TRANSPORTES\nNova solicitação de orçamento\n\n" + "\n".join(f"{key}: {value}" for key, value in fields.items())
+            rows = "".join(f'<tr><th style="text-align:left;padding:10px;border-bottom:1px solid #ddd">{escape(key)}</th><td style="padding:10px;border-bottom:1px solid #ddd;white-space:pre-wrap">{escape(value)}</td></tr>' for key, value in fields.items())
+            html = f'<div style="font-family:Arial,sans-serif;max-width:700px;margin:auto"><div style="background:#101510;color:#00a642;padding:24px"><h1>Doni Transportes</h1><p style="color:white">Nova solicitação de orçamento</p></div><table style="width:100%;border-collapse:collapse">{rows}</table><p style="margin:24px 0"><a style="background:#00a642;color:white;padding:14px;text-decoration:none;border-radius:6px" href="{escape(fields["Contato pelo WhatsApp"], quote=True)}">Conversar com o cliente no WhatsApp</a></p><p>Responder a este e-mail direciona a resposta ao cliente. Confirme os dados e a disponibilidade antes de fechar o frete.</p></div>'
+            payload = {"from": os.getenv("MAIL_FROM"), "to": [self.recipient], "reply_to": fields["email"], "subject": "Doni Transportes — orçamento " + fields["Protocolo"], "text": text, "html": html}
+            with httpx.Client(timeout=25, trust_env=False) as client:
+                response = client.post("https://api.resend.com/emails", json=payload, headers={"Authorization": "Bearer " + os.getenv("RESEND_API_KEY", ""), "Idempotency-Key": "orcamento/" + fields["Protocolo"]})
+                response.raise_for_status()
+                if not response.json().get("id"):
+                    raise RuntimeError("EMAIL_PROVIDER_NO_RECEIPT")
+            return
         if self.mode == "formsubmit":
             payload = {**fields, "_subject": f"Doni Transportes — orçamento {fields['Protocolo']}", "_template": "table", "_url": self.origin + "/orcamento.html", "_replyto": fields["email"]}
             with httpx.Client(timeout=25, trust_env=False) as client:

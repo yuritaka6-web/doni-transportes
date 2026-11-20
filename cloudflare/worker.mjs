@@ -11,6 +11,7 @@ export default {
   headers.set('x-doni-proxy-key',env.PROXY_SECRET||'');headers.set('x-doni-client-ip',request.headers.get('CF-Connecting-IP')||'');
   try {
    const response=await fetch(target,{method:request.method,headers,body:['GET','HEAD'].includes(request.method)?undefined:request.body,redirect:'manual',signal:AbortSignal.timeout(90000)});
+   if(response.status===204)return new Response(null,{status:204,headers:{'Cache-Control':'no-store'}});
    const type=response.headers.get('Content-Type')||'';
    if(!type.includes('json'))return failure(url.pathname,503,'O serviço está iniciando. Aguarde um minuto e tente novamente.');
    const outgoing=new Response(response.body,response);outgoing.headers.set('Cache-Control','no-store');return outgoing;

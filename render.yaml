@@ -19,7 +19,11 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: MAIL_TRANSPORT
-        value: formsubmit
+        value: resend
+      - key: RESEND_API_KEY
+        sync: false
+      - key: MAIL_FROM
+        value: Doni Transportes <onboarding@resend.dev>
       - key: COMPANY_EMAIL
         value: yuri.taka6@gmail.com
       - key: PUBLIC_ORIGIN

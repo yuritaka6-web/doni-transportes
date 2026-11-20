@@ -51,7 +51,7 @@ def documented_openapi(app):
             elif prop.get("format") == "date-time":
                 prop.setdefault("x-apidog-mock", "{{$date.isoTimestamp}}")
                 prop.setdefault("example", created)
-    for item in spec["paths"].values():
+    for path, item in spec["paths"].items():
         for method, operation in item.items():
             if method not in ("get", "post", "patch", "delete"):
                 continue
@@ -66,5 +66,13 @@ def documented_openapi(app):
                 ref = media.get("schema", {}).get("$ref", "").split("/")[-1]
                 if ref in examples:
                     media["example"] = copy.deepcopy(examples[ref])
+            from .exceptions import TITLES
+            for code, response in operation.get("responses", {}).items():
+                if int(code) >= 400:
+                    slug, title = TITLES.get(int(code), TITLES[500])
+                    example = {**examples["ApiError"], "status": int(code), "title": title, "type": "https://donitransportes.com.br/problems/" + slug, "detail": title + ".", "instance": path}
+                    if code not in ("400", "422"):
+                        example["invalidParams"] = []
+                    response["content"]["application/problem+json"]["example"] = example
     spec["servers"] = [{"url":"https://donitransportes.com.br","description":"Site e proxy de produção"},{"url":"http://127.0.0.1:8000","description":"Execução local"}]
     return spec
