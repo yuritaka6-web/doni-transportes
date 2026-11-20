@@ -1,0 +1,8 @@
+.brand-link { display: inline-flex; flex-shrink: 0; align-items: center; line-height: 0; }
+.brand-logo { display: block; width: 96px; height: auto; max-width: 100%; border-radius: 6px; }
+header .brand-logo { width: 90px; }
+footer .brand-link { margin-bottom: 20px; }
+footer .brand-logo { width: 140px; }
+.brand-group { display: flex; align-items: center; gap: 16px; }
+.brand-group > span { color: #bbb; font-size: 1rem; }
+@media (max-width: 480px) { header .brand-logo { width: 76px; } .brand-group { gap: 10px; } }

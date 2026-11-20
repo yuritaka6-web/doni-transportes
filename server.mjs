@@ -15,7 +15,7 @@ class ApiFailure extends Error {
 }
 const fail = (status, code, message, details) => { throw new ApiFailure(status, code, message, details); };
 const validId = value => validators.Identificador(value);
-const staticFiles = new Set(['index.html','sobre.html','servicos.html','orcamento.html','orcamento.js','orcamento.css','contato.js','admin.html','admin.js','caminhao2.jpeg','caminhaobau.jpeg','caminhaofrentepla.jpeg','caminhaolado.jpeg']);
+const staticFiles = new Set(['index.html','sobre.html','servicos.html','orcamento.html','orcamento.js','orcamento.css','contato.js','admin.html','admin.js','branding.css','logo-doni.jpeg','caminhao2.jpeg','caminhaobau.jpeg','caminhaofrentepla.jpeg','caminhaolado.jpeg']);
 const mime = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.jpeg':'image/jpeg' };
 
 export function createApp(options = {}) {
