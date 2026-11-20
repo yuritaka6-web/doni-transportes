@@ -10,8 +10,8 @@ Plano escrito antes da implementação desta migração, autorizada pelo autor e
 - [x] Implementar outbox, envio SMTP/HTTPS, retentativas e template com contato WhatsApp.
 - [x] Adaptar painel/formulário, exportar contrato v2 e documentação.
 - [x] Executar pytest com banco isolado, testar migração/persistência/rollback e transporte.
-- [ ] Configurar CI Python, implantação Render gratuita e proxy Cloudflare.
-- [ ] Migrar dados, configurar segredos em canais privados e testar prévia real.
-- [ ] Publicar código, contrato Apidog e domínio; verificar orçamento e e-mail em produção.
+- [x] Configurar CI Python, implantação Render gratuita e proxy Cloudflare.
+- [x] Migrar dados, configurar segredos em canais privados e testar prévia real.
+- [x] Publicar código, contrato Apidog e domínio; verificar orçamento e e-mail em produção.
 
 O trabalho permanece individual. Nenhum integrante fictício será acrescentado.
