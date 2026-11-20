@@ -33,7 +33,7 @@ async function loadOrders(){
       row.append(first,route,contact,action);rows.push(row);
     }
     if(!rows.length){const row=document.createElement('tr'),cell=text('td','Nenhuma solicitação encontrada.');cell.colSpan=4;cell.className='empty';row.append(cell);rows.push(row);}
-    $('orders').replaceChildren(...rows);$('pagination').textContent=`Página ${page} · ${data.paginacao.total} pedidos`;$('previous').disabled=page===1;$('next').disabled=page>=data.paginacao.totalPaginas;
+    $('orders').replaceChildren(...rows);$('pagination').textContent=`Página ${page} · ${data.paginacao.total} ${data.paginacao.total===1?'pedido':'pedidos'}`;$('previous').disabled=page===1;$('next').disabled=page>=data.paginacao.totalPaginas;
   }catch(error){feedback(error.message,true);}finally{loading=false;$('refresh').disabled=false;}
 }
 async function enter(user){operator=user;$('operator').textContent=`${user.nome} · ${user.papel}`;$('login-panel').hidden=true;$('dashboard').hidden=false;page=1;await loadOrders();}

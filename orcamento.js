@@ -28,7 +28,7 @@ for (const form of document.querySelectorAll('.quote-form')) {
     }
     const cliente = { nome:data.nome.trim(),email:data.email.trim(),telefone:`+${digits}`,tipoPessoa:data.tipoPessoa };
     if (cliente.nome.length < 2 || data.descricaoCarga.trim().length < 10 || data.origemCidade.trim().length < 2 || data.destinoCidade.trim().length < 2) {
-      report('Preencha nome, cidades e uma descrição de carga com pelo menos 10 caracteres.','error'); return;
+      report('Preencha seu nome e as cidades de origem e destino. Descreva a carga com pelo menos 10 caracteres.','error'); return;
     }
     submit.disabled = true; submit.textContent = 'Registrando solicitação…';
     result.textContent = '';

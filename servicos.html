@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serviços e Frota | Doni Transportes</title>
+    <title>Serviços e frota | Doni Transportes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --green: #00ff66; --green-hover: #1be05d; --dark: #0f0f0f; --darker: #080808; --card-bg: #161616; --text-light: #ffffff; --text-muted: #aaaaaa; }
@@ -60,7 +60,7 @@
         .modal-form button { background: var(--green); color: #000; padding: 14px; font-weight: bold; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; width: 100%; }
         .modal-form button:hover { background: var(--green-hover); }
 
-        /* Responsividade Telemóvel */
+        /* Responsividade para celulares */
         @media (max-width: 768px) { 
             .menu-toggle { display: block; }
             nav { display: none; width: 100%; position: absolute; top: 100%; left: 0; background-color: rgba(8, 8, 8, 0.98); border-bottom: 2px solid var(--green); padding: 20px 5%; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
@@ -94,48 +94,48 @@
         <nav id="menu">
             <ul>
                 <li><a href="index.html">Início</a></li>
-                <li><a href="sobre.html">Sobre Nós</a></li>
-                <li><a href="servicos.html" class="active">Serviços & Frota</a></li>
+                <li><a href="sobre.html">Sobre nós</a></li>
+                <li><a href="servicos.html" class="active">Serviços e frota</a></li>
                 <li><a href="orcamento.html">Orçamento</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="services-header">
-        <h1>As Nossas <span>Soluções</span></h1>
+        <h1>Nossas <span>soluções</span></h1>
         <p>Conheça a infraestrutura e os serviços logísticos que movem o seu negócio.</p>
     </div>
 
     <section class="feature-block">
         <div class="feature-text">
-            <h2>Cargas Rápidas e Agenciamento</h2>
-            <p>Especialistas em compra e venda de fretes. Gerimos a logística de ponta a ponta com alta performance, garantindo que a sua operação se mantenha em movimento sem atrasos ou burocracias desnecessárias.</p>
-            <button onclick="openModal()" class="btn"><i class="fas fa-envelope"></i> Cotar Frete</button>
+            <h2>Cargas rápidas e agenciamento</h2>
+            <p>Somos especialistas em compra e venda de fretes. Gerenciamos a logística de ponta a ponta com eficiência para manter sua operação em movimento, sem atrasos ou burocracia desnecessária.</p>
+            <button onclick="openModal()" class="btn"><i class="fas fa-envelope"></i> Cotar frete</button>
         </div>
         <div class="feature-img-wrapper">
-            <img src="caminhaolado.jpeg" alt="Camião Doni Transportes - Cargas Rápidas">
+            <img src="caminhaolado.jpeg" alt="Caminhão da Doni Transportes para cargas rápidas">
         </div>
     </section>
 
     <section class="feature-block">
         <div class="feature-text">
-            <h2>Amplo Espaço Volumétrico</h2>
-            <p>Os nossos baús são concebidos para otimização espacial. Capacidade maximizada de carga em veículos adequados, o que significa maior custo-benefício e eficiência no transporte da sua mercadoria.</p>
-            <button onclick="openModal()" class="btn"><i class="fas fa-envelope"></i> Ver Disponibilidade</button>
+            <h2>Amplo espaço para cargas</h2>
+            <p>Nossos baús são projetados para aproveitar melhor o espaço disponível. Com veículos adequados à sua carga, oferecemos melhor relação entre custo e benefício e mais eficiência no transporte das suas mercadorias.</p>
+            <button onclick="openModal()" class="btn"><i class="fas fa-envelope"></i> Consultar disponibilidade</button>
         </div>
         <div class="feature-img-wrapper">
-            <img src="caminhaobau.jpeg" alt="Interior do Baú do Camião">
+            <img src="caminhaobau.jpeg" alt="Interior do baú do caminhão">
         </div>
     </section>
 
     <section class="feature-block">
         <div class="feature-text">
-            <h2>Segurança Monitorizada</h2>
-            <p>Com frota própria rigorosamente mantida e monitorizada, asseguramos que cada remessa seja tratada com cuidado cirúrgico. Logística inteligente para que a sua carga chegue intacta ao destino final.</p>
-            <button onclick="openModal()" class="btn"><i class="fas fa-envelope"></i> Falar com Especialista</button>
+            <h2>Segurança e monitoramento</h2>
+            <p>Nossa frota própria recebe manutenção regular e é monitorada para que cada remessa seja transportada com cuidado. Organizamos a logística para preservar a integridade da sua carga até o destino final.</p>
+            <button onclick="openModal()" class="btn"><i class="fas fa-envelope"></i> Falar com um especialista</button>
         </div>
         <div class="feature-img-wrapper">
-            <img src="caminhao2.jpeg" alt="Frota no Parque">
+            <img src="caminhao2.jpeg" alt="Frota de caminhões estacionada">
         </div>
     </section>
 
@@ -148,7 +148,7 @@
   <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="quote-title">
     <button type="button" class="modal-close" onclick="closeModal()" aria-label="Fechar formulário" style="background:none;border:0">&times;</button>
     <h3 id="quote-title">Solicite seu orçamento</h3>
-    <p>Conte o que precisa transportar. Nossa equipe retornará pelos contatos informados.</p>
+    <p>Conte o que precisa transportar. Nossa equipe entrará em contato com você pelos canais informados.</p>
     <form class="quote-form">
   <fieldset><legend>Seus dados de contato</legend><div class="quote-grid">
     <label class="full">Nome ou empresa<input name="nome" autocomplete="name" minlength="2" maxlength="120" required></label>
