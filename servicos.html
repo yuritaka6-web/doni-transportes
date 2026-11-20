@@ -80,6 +80,7 @@
             .modal-content h3 { font-size: 1.3rem; }
         }
     </style>
+    <link rel="stylesheet" href="orcamento.css">
 </head>
 <body>
 
@@ -95,6 +96,7 @@
                 <li><a href="index.html">Início</a></li>
                 <li><a href="sobre.html">Sobre Nós</a></li>
                 <li><a href="servicos.html" class="active">Serviços & Frota</a></li>
+                <li><a href="orcamento.html">Orçamento</a></li>
             </ul>
         </nav>
     </header>
@@ -108,7 +110,7 @@
         <div class="feature-text">
             <h2>Cargas Rápidas e Agenciamento</h2>
             <p>Especialistas em compra e venda de fretes. Gerimos a logística de ponta a ponta com alta performance, garantindo que a sua operação se mantenha em movimento sem atrasos ou burocracias desnecessárias.</p>
-            <button onclick="openModal()" class="btn"><i class="fab fa-whatsapp"></i> Cotar Frete</button>
+            <button onclick="openModal()" class="btn"><i class="fas fa-envelope"></i> Cotar Frete</button>
         </div>
         <div class="feature-img-wrapper">
             <img src="caminhaolado.jpeg" alt="Camião Doni Transportes - Cargas Rápidas">
@@ -119,7 +121,7 @@
         <div class="feature-text">
             <h2>Amplo Espaço Volumétrico</h2>
             <p>Os nossos baús são concebidos para otimização espacial. Capacidade maximizada de carga em veículos adequados, o que significa maior custo-benefício e eficiência no transporte da sua mercadoria.</p>
-            <button onclick="openModal()" class="btn"><i class="fab fa-whatsapp"></i> Ver Disponibilidade</button>
+            <button onclick="openModal()" class="btn"><i class="fas fa-envelope"></i> Ver Disponibilidade</button>
         </div>
         <div class="feature-img-wrapper">
             <img src="caminhaobau.jpeg" alt="Interior do Baú do Camião">
@@ -130,7 +132,7 @@
         <div class="feature-text">
             <h2>Segurança Monitorizada</h2>
             <p>Com frota própria rigorosamente mantida e monitorizada, asseguramos que cada remessa seja tratada com cuidado cirúrgico. Logística inteligente para que a sua carga chegue intacta ao destino final.</p>
-            <button onclick="openModal()" class="btn"><i class="fab fa-whatsapp"></i> Falar com Especialista</button>
+            <button onclick="openModal()" class="btn"><i class="fas fa-envelope"></i> Falar com Especialista</button>
         </div>
         <div class="feature-img-wrapper">
             <img src="caminhao2.jpeg" alt="Frota no Parque">
@@ -143,40 +145,35 @@
 
     <!-- Pop-up (Modal) -->
     <div id="contactModal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h3>Fale com um Especialista</h3>
-            <p>Preencha os dados abaixo e entraremos em contacto diretamente pelo WhatsApp.</p>
-            <form class="modal-form" onsubmit="sendWhatsApp(event)">
-                <input type="text" id="nome" placeholder="O seu Nome / Empresa" required>
-                <input type="email" id="email" placeholder="O seu E-mail" required>
-                <input type="tel" id="telefone" placeholder="Telefone / WhatsApp" required>
-                <button type="submit">Iniciar Conversa</button>
-            </form>
-        </div>
-    </div>
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="quote-title">
+    <button type="button" class="modal-close" onclick="closeModal()" aria-label="Fechar formulário" style="background:none;border:0">&times;</button>
+    <h3 id="quote-title">Solicite seu orçamento</h3>
+    <p>Conte o que precisa transportar. Nossa equipe retornará pelos contatos informados.</p>
+    <form class="quote-form">
+  <fieldset><legend>Seus dados de contato</legend><div class="quote-grid">
+    <label class="full">Nome ou empresa<input name="nome" autocomplete="name" minlength="2" maxlength="120" required></label>
+    <label>E-mail<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+    <label>WhatsApp com DDD<input name="telefone" type="tel" autocomplete="tel" maxlength="25" placeholder="(16) 99123-4567" required></label>
+    <label>Tipo de cliente<select name="tipoPessoa"><option value="PF">Pessoa física</option><option value="PJ">Pessoa jurídica</option></select></label>
+  </div></fieldset>
+  <fieldset><legend>O que você precisa transportar?</legend><div class="quote-grid">
+    <label>Cidade de origem<input name="origemCidade" minlength="2" maxlength="100" required></label>
+    <label>UF de origem<select name="origemUf" required><option value="">Selecione</option><option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option></select></label>
+    <label>Cidade de destino<input name="destinoCidade" minlength="2" maxlength="100" required></label>
+    <label>UF de destino<select name="destinoUf" required><option value="">Selecione</option><option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option></select></label>
+    <label class="full">Descrição da carga<textarea name="descricaoCarga" minlength="10" maxlength="2000" placeholder="Descreva os produtos, a embalagem e os cuidados necessários." required></textarea></label>
+    <label>Peso estimado (kg)<input name="pesoKg" type="number" min="0.01" max="30000" step="any" placeholder="350" required></label>
+    <label>Data desejada de coleta<input name="dataColeta" type="date" required></label>
+    <label class="full">Observações <small>Opcional</small><textarea name="observacoes" maxlength="1000"></textarea></label>
+  </div></fieldset>
+  <p class="privacy">Usaremos seus dados para analisar esta solicitação e entrar em contato por e-mail ou WhatsApp. A coleta e o frete dependem de confirmação da equipe.</p>
+  <button type="submit">Solicitar orçamento</button>
+  <div role="status" aria-live="polite" tabindex="-1" class="form-result"></div>
+</form>
+  </div>
+</div>
 
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('active');
-        }
-
-        function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('contactModal').style.display = 'none'; }
-        window.onclick = function(event) { if (event.target == document.getElementById('contactModal')) closeModal(); }
-        
-        function sendWhatsApp(event) {
-            event.preventDefault();
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const telefone = document.getElementById('telefone').value;
-            const phoneNumber = "5516997843621";
-            const message = `*POTENCIAL NOVO CLIENTE*\n\n*Nome:* ${nome}\n*E-mail:* ${email}\n*Telefone:* ${telefone}\n\nOlá, gostaria de saber mais informações sobre os serviços da Doni Transportes.`;
-            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
-            closeModal();
-            document.querySelector('.modal-form').reset();
-        }
-    </script>
+    <script src="contato.js" defer></script>
+    <script src="orcamento.js" defer></script>
 </body>
 </html>
