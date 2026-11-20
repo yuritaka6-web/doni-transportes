@@ -13,3 +13,10 @@ Verificação local em 20/11/2026, com Node.js 24.14.0.
 | Credenciais no repositório | .env, banco e node_modules excluídos |
 
 Os testes de e-mail desta etapa usam transporte simulado. A Parte 1 teve teste real aceito pelo SMTP do Gmail, sem garantia de entrega na caixa de entrada. O Cloud Mock e o link do Apidog preservam a versão inicial. A execução de CI remota deve ser conferida na aba Actions após o push; os resultados acima não são uma declaração sobre o GitHub Actions.
+
+## Evidências adicionais
+
+- CI remoto aprovado na branch de implementação: https://github.com/yuritaka6-web/doni-transportes/actions/runs/44801550601
+- Código integrado por fast-forward e enviado para main, sem reescrever histórico.
+- Painel testado no navegador com conta ADMIN do autor: login e alteração de status de pedido fictício concluídos.
+- Senhas, cookies e banco de dados não foram enviados ao repositório.

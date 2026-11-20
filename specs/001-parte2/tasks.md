@@ -8,4 +8,4 @@
 - [x] TEST-01: executar suíte, migração e validação de contratos.
 - [x] SDD-01: registrar decisões, evidências, organização e roteiro de apresentação.
 - [x] Revisar exclusão de .env, banco e credenciais do Git.
-- [ ] Disponibilizar código revisável no repositório remoto.
+- [x] Disponibilizar código revisável no repositório remoto (branch main).
