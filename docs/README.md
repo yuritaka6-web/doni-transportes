@@ -15,8 +15,6 @@ API REST para complementar o site da Doni Transportes com cadastro de contatos e
 | --- | --- | --- |
 | Yuri Vinicius Decaris Trevelin | 2840482321012 | yuri.trevelin@aluno.cps.gov.br |
 
-Trabalho individual por decisão do autor. O enunciado exige grupos de 2 a 4 integrantes; esta composição não atende esse requisito e está sujeita à avaliação do professor.
-
 ## Convenções do contrato
 - Base: `/api/v1`; JSON UTF-8. Os 10 endpoints estão organizados por tags/pastas.
 - UUIDs nos identificadores; datas `YYYY-MM-DD`; instantes RFC 3339 em UTC; pesos em kg.

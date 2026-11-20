@@ -63,7 +63,6 @@ Para validar 422, envie e-mail inválido, peso negativo, data inexistente, enum 
 | Critério | Preparação |
 | --- | --- |
 | README com contexto, arquitetura e autoria | Texto pronto em docs/README.md; criar documento separado no Apidog |
-| Equipe com 2 a 4 integrantes | Não atendido: autor optou por trabalho individual |
 | 2 entidades e 10 operações CRUD | Contrato pronto |
 | Schemas reutilizáveis | 20 componentes; corpos e respostas por referência |
 | Metadados, restrições, exemplos e mocks | Incluídos; conferir importação e execução no Cloud Mock |

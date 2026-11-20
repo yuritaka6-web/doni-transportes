@@ -26,7 +26,7 @@ Uma solicitação pertence a um cliente. Clientes com solicitações não podem 
 
 ## Fora do escopo
 
-Cadastro público de operadores, recuperação de senha por e-mail, pagamentos, GPS e implantação pública. A conta inicial é criada por comando local com senha escolhida pelo responsável. Trabalho individual: não inventar integrantes ou contribuições. A regra acadêmica de 2 a 4 pessoas permanece não atendida.
+Cadastro público de operadores, recuperação de senha por e-mail, pagamentos, GPS e implantação pública. A conta inicial é criada por comando local com senha escolhida pelo responsável.
 
 ## Honestidade do processo
 

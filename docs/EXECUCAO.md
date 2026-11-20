@@ -1,4 +1,4 @@
-> Guia histórico da Parte 1. Para executar a Parte 2 com autenticação, use o README da raiz e docs/APRESENTACAO.md. O contrato atual é openapi-v1.1.json.
+> Guia histórico da Parte 1. Para executar a Parte 2 com autenticação, use o README da raiz. O contrato atual é openapi-v1.1.json.
 
 # Operação e verificação local
 

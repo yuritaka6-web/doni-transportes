@@ -7,6 +7,6 @@
 5. Implementar sessões opacas: token aleatório de 256 bits em cookie HttpOnly; SHA-256 no banco; expiração em 8 horas; scrypt assíncrono para senhas. ADMIN e LEITOR com autorização no servidor. Origem diferente é rejeitada nas mutações autenticadas.
 6. Manter POSTs públicos para o formulário; exigir sessão para consultas/alterações/exclusões. Login e formulário com limites de uso em memória por IP, adequados ao processo local; produção exigirá armazenamento compartilhado.
 7. Criar painel comercial e contrato v1.1 separado, mantendo intacta a entrega publicada da Parte 1.
-8. Executar validação do contrato e testes de integração, revisar diff/segredos e preparar repositório/apresentação.
+8. Executar validação do contrato e testes de integração, revisar diff/segredos e preparar a entrega do repositório.
 
 Referência da integração: https://orm.drizzle.team/docs/sqlite/connect-node-sqlite

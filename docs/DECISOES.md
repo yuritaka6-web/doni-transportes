@@ -22,4 +22,4 @@ Pedido e notificação são gravados na mesma transação ORM. O worker SMTP ope
 
 ## Limites conhecidos
 
-Sem hospedagem pública do backend, recuperação de senha, MFA, paginação por cursor ou monitoramento externo. O servidor continua restrito a loopback. Autenticação é funcional, mas implantação pública ainda requer HTTPS, proxy confiável, armazenamento persistente, backups, proteção distribuída contra abuso e política de dados pessoais. O projeto é individual.
+Sem hospedagem pública do backend, recuperação de senha, MFA, paginação por cursor ou monitoramento externo. O servidor continua restrito a loopback. Autenticação é funcional, mas implantação pública ainda requer HTTPS, proxy confiável, armazenamento persistente, backups, proteção distribuída contra abuso e política de dados pessoais.

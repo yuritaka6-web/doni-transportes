@@ -10,7 +10,6 @@ Projeto acadêmico para cadastrar contatos e solicitações de cotação de fret
 - [Organização e autoria](docs/EQUIPE.md)
 - [Desenvolvimento com IA e SDD](docs/IA-SDD.md)
 - [Decisões arquiteturais e limitações](docs/DECISOES.md)
-- [Roteiro de apresentação](docs/APRESENTACAO.md)
 
 ## Executar
 
@@ -61,7 +60,7 @@ Pedido e notificação são gravados na mesma transação ORM. O worker processa
 
 ## Configurar e-mail
 
-Preencha localmente SMTP_USER, SMTP_PASS e MAIL_FROM no `.env`, conforme `.env.example`. COMPANY_EMAIL define o destinatário fixo. Gmail pode ser o servidor de envio; use uma senha de app e siga a [orientação oficial do Google](https://support.google.com/accounts/answer/185833). Reinicie após alterar o ambiente. Nunca publique ou projete `.env`; ele contém credenciais.
+Preencha localmente SMTP_USER, SMTP_PASS e MAIL_FROM no `.env`, conforme `.env.example`. COMPANY_EMAIL define o destinatário fixo. Gmail pode ser o servidor de envio; use uma senha de app e siga a [orientação oficial do Google](https://support.google.com/accounts/answer/185833). Reinicie após alterar o ambiente. Nunca publique `.env`; ele contém credenciais.
 
 ## Contratos
 
@@ -96,7 +95,7 @@ admin.html / admin.js painel comercial
 orcamento.*           formulário público
 scripts/              criação local do administrador e checks
 tests/                testes de integração
-docs/                 contratos, decisões e apresentação
+docs/                 contratos e decisões técnicas
 .github/workflows/    CI
 ```
 
@@ -104,4 +103,4 @@ docs/                 contratos, decisões e apresentação
 
 Versão acadêmica local, escutando apenas em loopback. O domínio público não recebeu este backend; GitHub Pages não executa Node.js. Implantação pública requer HTTPS, armazenamento persistente, backups, proxy confiável, proteção distribuída contra abuso e política de dados pessoais. Não há recuperação de senha, MFA, pagamentos ou GPS. Faça backup do banco antes de atualizar um ambiente com dados reais.
 
-**Yuri Vinicius Decaris Trevelin — RA 2840482321012 — yuri.trevelin@aluno.cps.gov.br.** Trabalho individual com assistência do Codex. O requisito de 2 a 4 integrantes da Parte 1 não é atendido; alinhar com o professor.
+**Yuri Vinicius Decaris Trevelin — RA 2840482321012 — yuri.trevelin@aluno.cps.gov.br.** Desenvolvimento com assistência do Codex, conforme o registro de IA e SDD.

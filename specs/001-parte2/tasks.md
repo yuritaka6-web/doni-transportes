@@ -6,6 +6,6 @@
 - [x] API-01/02: aplicar autorização e disponibilizar contrato v1.1.
 - [x] EXTRA-01: painel comercial acessível.
 - [x] TEST-01: executar suíte, migração e validação de contratos.
-- [x] SDD-01: registrar decisões, evidências, organização e roteiro de apresentação.
+- [x] SDD-01: registrar decisões, evidências, organização técnica.
 - [x] Revisar exclusão de .env, banco e credenciais do Git.
 - [x] Disponibilizar código revisável no repositório remoto (branch main).
