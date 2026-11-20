@@ -3044,7 +3044,10 @@
           "title": {
             "type": "string",
             "title": "Title",
-            "description": "title: atributo do contrato ApiError.",
+            "description": "Resumo legível e estável do tipo de problema.",
+            "examples": [
+              "Dados inválidos"
+            ],
             "example": "Dados inválidos"
           },
           "status": {
@@ -3052,19 +3055,28 @@
             "maximum": 599.0,
             "minimum": 400.0,
             "title": "Status",
-            "description": "Código HTTP correspondente à resposta.",
+            "description": "Código HTTP numérico, igual ao status da resposta.",
+            "examples": [
+              422
+            ],
             "example": 422
           },
           "detail": {
             "type": "string",
             "title": "Detail",
-            "description": "detail: atributo do contrato ApiError.",
+            "description": "Explicação da ocorrência específica, sem informações internas de SQL ou credenciais.",
+            "examples": [
+              "Confira os campos informados."
+            ],
             "example": "Confira os campos informados."
           },
           "instance": {
             "type": "string",
             "title": "Instance",
-            "description": "instance: atributo do contrato ApiError.",
+            "description": "Caminho da requisição que originou este problema; não inclui parâmetros sensíveis.",
+            "examples": [
+              "/api/v1/clientes"
+            ],
             "example": "/api/v1/clientes"
           },
           "invalidParams": {
@@ -3073,7 +3085,7 @@
             },
             "type": "array",
             "title": "Invalidparams",
-            "description": "invalidParams: atributo do contrato ApiError.",
+            "description": "Violações de campos em erros 400/422; lista vazia nos demais problemas.",
             "example": [
               {
                 "name": "nome",
@@ -3385,14 +3397,20 @@
           "name": {
             "type": "string",
             "title": "Name",
-            "description": "name: atributo do contrato InvalidParam.",
-            "example": "nome"
+            "description": "Caminho do campo rejeitado, incluindo campos aninhados quando aplicável.",
+            "examples": [
+              "cliente/email"
+            ],
+            "example": "cliente/email"
           },
           "reason": {
             "type": "string",
             "title": "Reason",
-            "description": "reason: atributo do contrato InvalidParam.",
-            "example": "Informe ao menos dois caracteres."
+            "description": "Explicação da regra violada, sem reproduzir senha ou dados sensíveis enviados.",
+            "examples": [
+              "Informe um e-mail válido."
+            ],
+            "example": "Informe um e-mail válido."
           }
         },
         "additionalProperties": false,
@@ -3564,11 +3582,11 @@
             "maxLength": 254,
             "format": "email",
             "title": "Email",
-            "description": "E-mail para contato e Reply-To.",
+            "description": "E-mail de acesso do operador cadastrado; não é o contato de um cliente.",
             "examples": [
-              "compras@example.com"
+              "operador@example.com"
             ],
-            "example": "compras@example.com"
+            "example": "operador@example.com"
           },
           "password": {
             "type": "string",
@@ -4005,21 +4023,27 @@
           "tokenType": {
             "type": "string",
             "title": "Tokentype",
+            "description": "Esquema usado no cabeçalho Authorization: Bearer <accessToken>.",
             "default": "bearer",
-            "description": "tokenType: atributo do contrato TokenResponseDTO.",
+            "examples": [
+              "bearer"
+            ],
             "example": "bearer"
           },
           "expiresIn": {
             "type": "integer",
             "minimum": 1.0,
             "title": "Expiresin",
+            "description": "Validade do token em segundos a partir da emissão; a API emite tokens de uma hora.",
             "default": 3600,
-            "description": "expiresIn: atributo do contrato TokenResponseDTO.",
+            "examples": [
+              3600
+            ],
             "example": 3600
           },
           "user": {
             "$ref": "#/components/schemas/UserResponse",
-            "description": "user: atributo do contrato TokenResponseDTO.",
+            "description": "Identidade e papel do operador, sem senha, hash ou credenciais.",
             "example": {
               "id": "c530a965-f481-4d34-a9a6-988be14c0152",
               "name": "Operador de exemplo",
@@ -4218,14 +4242,19 @@
             "type": "string",
             "format": "uuid",
             "title": "Id",
-            "description": "id: atributo do contrato UserResponse.",
+            "description": "Identificador imutável do operador, usado na claim sub do JWT.",
             "example": "c530a965-f481-4d34-a9a6-988be14c0152",
             "x-apidog-mock": "{{$string.uuid}}"
           },
           "name": {
             "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
             "title": "Name",
-            "description": "name: atributo do contrato UserResponse.",
+            "description": "Nome de exibição do operador no painel comercial.",
+            "examples": [
+              "Operador de exemplo"
+            ],
             "example": "Operador de exemplo"
           },
           "email": {
@@ -4233,15 +4262,18 @@
             "maxLength": 254,
             "format": "email",
             "title": "Email",
-            "description": "E-mail para contato e Reply-To.",
+            "description": "E-mail de acesso do operador autenticado.",
             "examples": [
-              "compras@example.com"
+              "operador@example.com"
             ],
-            "example": "compras@example.com"
+            "example": "operador@example.com"
           },
           "role": {
             "$ref": "#/components/schemas/Papel",
-            "description": "role: atributo do contrato UserResponse.",
+            "description": "ADMIN pode excluir recursos; MEMBER pode consultar, criar e editar.",
+            "examples": [
+              "ADMIN"
+            ],
             "example": "ADMIN"
           }
         },

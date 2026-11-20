@@ -155,33 +155,33 @@ class ListaSolicitacoes(Contract):
 
 
 class LoginRequestDTO(Contract):
-    email: Email
+    email: Email = Field(description="E-mail de acesso do operador cadastrado; não é o contato de um cliente.", examples=["operador@example.com"])
     password: str = Field(min_length=6, max_length=256, description="Senha do operador; nunca devolvida em respostas.", json_schema_extra={"writeOnly": True})
 
 
 class UserResponse(Contract):
-    id: UUID
-    name: str
-    email: Email
-    role: Papel
+    id: UUID = Field(description="Identificador imutável do operador, usado na claim sub do JWT.")
+    name: str = Field(description="Nome de exibição do operador no painel comercial.", min_length=1, max_length=120, examples=["Operador de exemplo"])
+    email: Email = Field(description="E-mail de acesso do operador autenticado.", examples=["operador@example.com"])
+    role: Papel = Field(description="ADMIN pode excluir recursos; MEMBER pode consultar, criar e editar.", examples=["ADMIN"])
 
 
 class TokenResponseDTO(Contract):
     accessToken: str = Field(description="JWT assinado HS256 com duração limitada.")
-    tokenType: str = "bearer"
-    expiresIn: int = Field(default=3600, ge=1)
-    user: UserResponse
+    tokenType: str = Field(default="bearer", description="Esquema usado no cabeçalho Authorization: Bearer <accessToken>.", examples=["bearer"])
+    expiresIn: int = Field(default=3600, ge=1, description="Validade do token em segundos a partir da emissão; a API emite tokens de uma hora.", examples=[3600])
+    user: UserResponse = Field(description="Identidade e papel do operador, sem senha, hash ou credenciais.")
 
 
 class InvalidParam(Contract):
-    name: str
-    reason: str
+    name: str = Field(description="Caminho do campo rejeitado, incluindo campos aninhados quando aplicável.", examples=["cliente/email"])
+    reason: str = Field(description="Explicação da regra violada, sem reproduzir senha ou dados sensíveis enviados.", examples=["Informe um e-mail válido."])
 
 
 class ApiError(Contract):
     type: str = Field(description="URI identificadora do tipo de problema.", json_schema_extra={"format": "uri"})
-    title: str
-    status: int = Field(ge=400, le=599)
-    detail: str
-    instance: str
-    invalidParams: list[InvalidParam] = Field(default_factory=list)
+    title: str = Field(description="Resumo legível e estável do tipo de problema.", examples=["Dados inválidos"])
+    status: int = Field(ge=400, le=599, description="Código HTTP numérico, igual ao status da resposta.", examples=[422])
+    detail: str = Field(description="Explicação da ocorrência específica, sem informações internas de SQL ou credenciais.", examples=["Confira os campos informados."])
+    instance: str = Field(description="Caminho da requisição que originou este problema; não inclui parâmetros sensíveis.", examples=["/api/v1/clientes"])
+    invalidParams: list[InvalidParam] = Field(default_factory=list, description="Violações de campos em erros 400/422; lista vazia nos demais problemas.")
