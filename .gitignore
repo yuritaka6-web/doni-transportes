@@ -2,3 +2,14 @@ node_modules/
 .env
 data/
 *.log
+
+.wrangler/
+dist/
+cloudflare/generated/
+.dev.vars*
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.sqlite*
+data/

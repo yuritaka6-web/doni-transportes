@@ -1,22 +1,13 @@
-# Evidências de validação — Parte 2
+# Evidências de validação
 
-Verificação local em 20/11/2026, com Node.js 24.14.0.
+Migração Python em 20/11/2026. Governança e especificação precederam o código desta migração; backend anterior e suas evidências permanecem no histórico.
 
-| Verificação | Resultado observado |
-| --- | --- |
-| Instalação limpa com npm ci no checkout do repositório | Concluída |
-| npm run check:contract | OpenAPI válido; 13 operações; 23 schemas; corpos/respostas por referência e exemplos válidos |
-| npm test | 12 testes passaram, sem falhas |
-| npm audit --omit=dev --audit-level=high | Nenhuma vulnerabilidade reportada |
-| Migração de banco legado | Dados preservados após aplicar migrações e reabrir |
-| Transação ORM | Falha simulada provocou rollback do pedido |
-| Credenciais no repositório | .env, banco e node_modules excluídos |
+- pytest: 25 testes passaram, sem falhas, usando banco SQLite isolado por cenário.
+- Contrato v2: 14 operações, 22 schemas, corpos/respostas referenciados, exemplos validados e exportação comparada ao runtime.
+- JWT: assinatura, emissor/audiência, expiração, ausência/invalidade, RBAC ADMIN/MEMBER e senhas scrypt.
+- ORM: SQLAlchemy 2.0, colunas tipadas, ForeignKey/relationship 1:N, selectinload com contagem de queries, paginação, persistência após reiniciar e rollback de pedido/contato/outbox.
+- Migração real local: preservados 1 cliente, 1 solicitação e 1 operador; origem não alterada. Teste automatizado prova idempotência e login com hash legado.
+- Notificação: testes simulados validam contatos/WhatsApp, falha/reenvio e ausência de reenvio por PATCH. Provedor HTTPS aceitou teste autorizado após ativação do destinatário. Não equivale à confirmação de leitura na caixa de entrada.
+- Credenciais, banco e bootstrap são privados e excluídos do Git.
 
-Os testes de e-mail desta etapa usam transporte simulado. A Parte 1 teve teste real aceito pelo SMTP do Gmail, sem garantia de entrega na caixa de entrada. O Cloud Mock e o link do Apidog preservam a versão inicial. A execução de CI remota deve ser conferida na aba Actions após o push; os resultados acima não são uma declaração sobre o GitHub Actions.
-
-## Evidências adicionais
-
-- CI remoto aprovado na branch de implementação: https://github.com/yuritaka6-web/doni-transportes/actions/runs/44801550601
-- Código integrado por fast-forward e enviado para main, sem reescrever histórico.
-- Painel testado no navegador com conta ADMIN do autor: login e alteração de status de pedido fictício concluídos.
-- Senhas, cookies e banco de dados não foram enviados ao repositório.
+Implantação Render/Cloudflare, CI remoto e atualização Apidog serão registrados abaixo após validação real. Esta seção não declara esses passos concluídos antecipadamente.

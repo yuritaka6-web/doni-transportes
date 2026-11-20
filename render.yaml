@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: doni-transportes-api
+    runtime: python
+    plan: free
+    region: virginia
+    buildCommand: pip install -r src/api/requirements.txt
+    startCommand: uvicorn src.api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: doni-transportes-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MAIL_TRANSPORT
+        value: formsubmit
+      - key: COMPANY_EMAIL
+        value: yuri.taka6@gmail.com
+      - key: PUBLIC_ORIGIN
+        value: https://donitransportes.com.br
+databases:
+  - name: doni-transportes-db
+    plan: free
+    region: virginia

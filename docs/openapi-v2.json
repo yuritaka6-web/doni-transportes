@@ -1,0 +1,4703 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Doni Transportes — API de Orçamentos",
+    "description": "API REST de clientes e solicitações de transporte. FastAPI, Pydantic v2, SQLAlchemy 2.0 e JWT/RBAC. Autoria: Yuri Vinicius Decaris Trevelin, RA 2840482321012.",
+    "version": "2.0.0"
+  },
+  "paths": {
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Autenticação"
+        ],
+        "summary": "Autenticar operador",
+        "operationId": "login_api_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              },
+              "example": {
+                "email": "operador@example.com",
+                "password": "Exemplo-sem-validade-2026"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponseDTO"
+                },
+                "example": {
+                  "accessToken": "JWT_EXEMPLO_SEM_VALIDADE",
+                  "tokenType": "bearer",
+                  "expiresIn": 3600,
+                  "user": {
+                    "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+                    "name": "Operador de exemplo",
+                    "email": "operador@example.com",
+                    "role": "ADMIN"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "tags": [
+          "Autenticação"
+        ],
+        "summary": "Consultar operador autenticado",
+        "operationId": "me_api_v1_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                },
+                "example": {
+                  "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+                  "name": "Operador de exemplo",
+                  "email": "operador@example.com",
+                  "role": "ADMIN"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/clientes": {
+      "post": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Cadastrar cliente",
+        "operationId": "create_api_v1_clientes_post",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClienteDTO"
+              },
+              "example": {
+                "nome": "Comercial Exemplo Ltda.",
+                "email": "compras@example.com",
+                "telefone": "+5516991234567",
+                "tipoPessoa": "PJ"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cliente"
+                },
+                "example": {
+                  "nome": "Comercial Exemplo Ltda.",
+                  "email": "compras@example.com",
+                  "telefone": "+5516991234567",
+                  "tipoPessoa": "PJ",
+                  "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+                  "criadoEm": "2026-11-20T17:00:00Z",
+                  "atualizadoEm": "2026-11-20T17:00:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI relativa do recurso criado.",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "/api/v1/solicitacoes-orcamento/87792e48-b293-4a91-a767-4a0d19eeaee6"
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Listar clientes",
+        "operationId": "listing_api_v1_clientes_get",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 1,
+              "default": 1,
+              "title": "Pagina"
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limite"
+            }
+          },
+          {
+            "name": "busca",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Busca"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaClientes"
+                },
+                "example": {
+                  "dados": [
+                    {
+                      "nome": "Comercial Exemplo Ltda.",
+                      "email": "compras@example.com",
+                      "telefone": "+5516991234567",
+                      "tipoPessoa": "PJ",
+                      "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+                      "criadoEm": "2026-11-20T17:00:00Z",
+                      "atualizadoEm": "2026-11-20T17:00:00Z"
+                    }
+                  ],
+                  "paginacao": {
+                    "pagina": 1,
+                    "limite": 20,
+                    "total": 1,
+                    "totalPaginas": 1
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/clientes/{id}/solicitacoes-orcamento": {
+      "get": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Consultar relacionamento cliente e solicitações",
+        "operationId": "relationship_api_v1_clientes__id__solicitacoes_orcamento_get",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 1,
+              "default": 1,
+              "title": "Pagina"
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limite"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaSolicitacoes"
+                },
+                "example": {
+                  "dados": [
+                    {
+                      "origem": {
+                        "cidade": "Ribeirão Preto",
+                        "uf": "SP"
+                      },
+                      "destino": {
+                        "cidade": "Campinas",
+                        "uf": "SP"
+                      },
+                      "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+                      "pesoKg": 350.5,
+                      "dataColeta": "2026-12-10",
+                      "observacoes": "Coleta em horário comercial.",
+                      "clienteId": "c530a965-f481-4d34-a9a6-988be14c0152",
+                      "id": "87792e48-b293-4a91-a767-4a0d19eeaee6",
+                      "status": "RECEBIDA",
+                      "statusEmail": "PENDENTE",
+                      "criadoEm": "2026-11-20T17:00:00Z",
+                      "atualizadoEm": "2026-11-20T17:00:00Z"
+                    }
+                  ],
+                  "paginacao": {
+                    "pagina": 1,
+                    "limite": 20,
+                    "total": 1,
+                    "totalPaginas": 1
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/clientes/{id}": {
+      "get": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Buscar cliente",
+        "operationId": "item_api_v1_clientes__id__get",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cliente"
+                },
+                "example": {
+                  "nome": "Comercial Exemplo Ltda.",
+                  "email": "compras@example.com",
+                  "telefone": "+5516991234567",
+                  "tipoPessoa": "PJ",
+                  "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+                  "criadoEm": "2026-11-20T17:00:00Z",
+                  "atualizadoEm": "2026-11-20T17:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Atualizar cliente",
+        "operationId": "patch_api_v1_clientes__id__patch",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClienteDTO"
+              },
+              "example": {
+                "nome": "Contato atualizado"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cliente"
+                },
+                "example": {
+                  "nome": "Comercial Exemplo Ltda.",
+                  "email": "compras@example.com",
+                  "telefone": "+5516991234567",
+                  "tipoPessoa": "PJ",
+                  "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+                  "criadoEm": "2026-11-20T17:00:00Z",
+                  "atualizadoEm": "2026-11-20T17:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Excluir cliente",
+        "operationId": "delete_api_v1_clientes__id__delete",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/solicitacoes-orcamento": {
+      "post": {
+        "tags": [
+          "Solicitações de orçamento"
+        ],
+        "summary": "Criar solicitação de orçamento",
+        "operationId": "create_api_v1_solicitacoes_orcamento_post",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSolicitacaoDTO"
+              },
+              "example": {
+                "origem": {
+                  "cidade": "Ribeirão Preto",
+                  "uf": "SP"
+                },
+                "destino": {
+                  "cidade": "Campinas",
+                  "uf": "SP"
+                },
+                "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+                "pesoKg": 350.5,
+                "dataColeta": "2026-12-10",
+                "observacoes": "Coleta em horário comercial.",
+                "clienteId": "c530a965-f481-4d34-a9a6-988be14c0152"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitacaoOrcamento"
+                },
+                "example": {
+                  "origem": {
+                    "cidade": "Ribeirão Preto",
+                    "uf": "SP"
+                  },
+                  "destino": {
+                    "cidade": "Campinas",
+                    "uf": "SP"
+                  },
+                  "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+                  "pesoKg": 350.5,
+                  "dataColeta": "2026-12-10",
+                  "observacoes": "Coleta em horário comercial.",
+                  "clienteId": "c530a965-f481-4d34-a9a6-988be14c0152",
+                  "id": "87792e48-b293-4a91-a767-4a0d19eeaee6",
+                  "status": "RECEBIDA",
+                  "statusEmail": "PENDENTE",
+                  "criadoEm": "2026-11-20T17:00:00Z",
+                  "atualizadoEm": "2026-11-20T17:00:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI relativa do recurso criado.",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "/api/v1/solicitacoes-orcamento/87792e48-b293-4a91-a767-4a0d19eeaee6"
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Solicitações de orçamento"
+        ],
+        "summary": "Listar solicitações de orçamento",
+        "operationId": "listing_api_v1_solicitacoes_orcamento_get",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000000,
+              "minimum": 1,
+              "default": 1,
+              "title": "Pagina"
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limite"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/StatusSolicitacao"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "clienteId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Clienteid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaSolicitacoes"
+                },
+                "example": {
+                  "dados": [
+                    {
+                      "origem": {
+                        "cidade": "Ribeirão Preto",
+                        "uf": "SP"
+                      },
+                      "destino": {
+                        "cidade": "Campinas",
+                        "uf": "SP"
+                      },
+                      "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+                      "pesoKg": 350.5,
+                      "dataColeta": "2026-12-10",
+                      "observacoes": "Coleta em horário comercial.",
+                      "clienteId": "c530a965-f481-4d34-a9a6-988be14c0152",
+                      "id": "87792e48-b293-4a91-a767-4a0d19eeaee6",
+                      "status": "RECEBIDA",
+                      "statusEmail": "PENDENTE",
+                      "criadoEm": "2026-11-20T17:00:00Z",
+                      "atualizadoEm": "2026-11-20T17:00:00Z"
+                    }
+                  ],
+                  "paginacao": {
+                    "pagina": 1,
+                    "limite": 20,
+                    "total": 1,
+                    "totalPaginas": 1
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/solicitacoes-orcamento/{id}": {
+      "get": {
+        "tags": [
+          "Solicitações de orçamento"
+        ],
+        "summary": "Buscar solicitação de orçamento",
+        "operationId": "item_api_v1_solicitacoes_orcamento__id__get",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitacaoOrcamento"
+                },
+                "example": {
+                  "origem": {
+                    "cidade": "Ribeirão Preto",
+                    "uf": "SP"
+                  },
+                  "destino": {
+                    "cidade": "Campinas",
+                    "uf": "SP"
+                  },
+                  "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+                  "pesoKg": 350.5,
+                  "dataColeta": "2026-12-10",
+                  "observacoes": "Coleta em horário comercial.",
+                  "clienteId": "c530a965-f481-4d34-a9a6-988be14c0152",
+                  "id": "87792e48-b293-4a91-a767-4a0d19eeaee6",
+                  "status": "RECEBIDA",
+                  "statusEmail": "PENDENTE",
+                  "criadoEm": "2026-11-20T17:00:00Z",
+                  "atualizadoEm": "2026-11-20T17:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Solicitações de orçamento"
+        ],
+        "summary": "Atualizar solicitação de orçamento",
+        "operationId": "patch_api_v1_solicitacoes_orcamento__id__patch",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSolicitacaoDTO"
+              },
+              "example": {
+                "status": "EM_ANALISE"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitacaoOrcamento"
+                },
+                "example": {
+                  "origem": {
+                    "cidade": "Ribeirão Preto",
+                    "uf": "SP"
+                  },
+                  "destino": {
+                    "cidade": "Campinas",
+                    "uf": "SP"
+                  },
+                  "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+                  "pesoKg": 350.5,
+                  "dataColeta": "2026-12-10",
+                  "observacoes": "Coleta em horário comercial.",
+                  "clienteId": "c530a965-f481-4d34-a9a6-988be14c0152",
+                  "id": "87792e48-b293-4a91-a767-4a0d19eeaee6",
+                  "status": "RECEBIDA",
+                  "statusEmail": "PENDENTE",
+                  "criadoEm": "2026-11-20T17:00:00Z",
+                  "atualizadoEm": "2026-11-20T17:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Solicitações de orçamento"
+        ],
+        "summary": "Excluir solicitação de orçamento",
+        "operationId": "delete_api_v1_solicitacoes_orcamento__id__delete",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/orcamentos/publico": {
+      "post": {
+        "tags": [
+          "Solicitações de orçamento",
+          "Formulário público"
+        ],
+        "summary": "Enviar orçamento pelo site",
+        "operationId": "public_api_v1_orcamentos_publico_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrcamentoPublicoDTO"
+              },
+              "example": {
+                "origem": {
+                  "cidade": "Ribeirão Preto",
+                  "uf": "SP"
+                },
+                "destino": {
+                  "cidade": "Campinas",
+                  "uf": "SP"
+                },
+                "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+                "pesoKg": 350.5,
+                "dataColeta": "2026-12-10",
+                "observacoes": "Coleta em horário comercial.",
+                "cliente": {
+                  "nome": "Comercial Exemplo Ltda.",
+                  "email": "compras@example.com",
+                  "telefone": "+5516991234567",
+                  "tipoPessoa": "PJ"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrcamentoRecebido"
+                },
+                "example": {
+                  "id": "87792e48-b293-4a91-a767-4a0d19eeaee6",
+                  "status": "RECEBIDA",
+                  "statusEmail": "PENDENTE",
+                  "mensagem": "Solicitação registrada."
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI relativa do recurso criado.",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "/api/v1/solicitacoes-orcamento/87792e48-b293-4a91-a767-4a0d19eeaee6"
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente/inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Perfil sem permissão",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso não encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito de relacionamento",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validação",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite excedido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço em configuração",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                },
+                "example": {
+                  "type": "https://donitransportes.com.br/problems/validation-error",
+                  "title": "Dados inválidos",
+                  "status": 422,
+                  "detail": "Confira os campos informados.",
+                  "instance": "/api/v1/clientes",
+                  "invalidParams": [
+                    {
+                      "name": "nome",
+                      "reason": "Informe ao menos dois caracteres."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiError": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri",
+            "title": "Type",
+            "description": "URI identificadora do tipo de problema.",
+            "example": "https://donitransportes.com.br/problems/validation-error"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "description": "title: atributo do contrato ApiError.",
+            "example": "Dados inválidos"
+          },
+          "status": {
+            "type": "integer",
+            "maximum": 599.0,
+            "minimum": 400.0,
+            "title": "Status",
+            "description": "Código HTTP correspondente à resposta.",
+            "example": 422
+          },
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "detail: atributo do contrato ApiError.",
+            "example": "Confira os campos informados."
+          },
+          "instance": {
+            "type": "string",
+            "title": "Instance",
+            "description": "instance: atributo do contrato ApiError.",
+            "example": "/api/v1/clientes"
+          },
+          "invalidParams": {
+            "items": {
+              "$ref": "#/components/schemas/InvalidParam"
+            },
+            "type": "array",
+            "title": "Invalidparams",
+            "description": "invalidParams: atributo do contrato ApiError.",
+            "example": [
+              {
+                "name": "nome",
+                "reason": "Informe ao menos dois caracteres."
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "instance",
+          "invalidParams"
+        ],
+        "title": "ApiError",
+        "description": "Resposta padronizada de erro. Erros de validação incluem detalhes; os demais usam lista vazia.",
+        "example": {
+          "type": "https://donitransportes.com.br/problems/validation-error",
+          "title": "Dados inválidos",
+          "status": 422,
+          "detail": "Confira os campos informados.",
+          "instance": "/api/v1/clientes",
+          "invalidParams": [
+            {
+              "name": "nome",
+              "reason": "Informe ao menos dois caracteres."
+            }
+          ]
+        }
+      },
+      "Cliente": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2,
+            "pattern": "\\S",
+            "title": "Nome",
+            "description": "Nome do contato ou razão social.",
+            "examples": [
+              "Comercial Exemplo Ltda."
+            ],
+            "example": "Comercial Exemplo Ltda.",
+            "x-apidog-mock": "{{$person.fullName}}"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "format": "email",
+            "title": "Email",
+            "description": "E-mail para contato e Reply-To.",
+            "examples": [
+              "compras@example.com"
+            ],
+            "example": "compras@example.com",
+            "x-apidog-mock": "{{$internet.email}}"
+          },
+          "telefone": {
+            "type": "string",
+            "maxLength": 14,
+            "minLength": 13,
+            "pattern": "^\\+55[1-9][0-9][0-9]{8,9}$",
+            "title": "Telefone",
+            "description": "WhatsApp brasileiro com código de país e DDD.",
+            "examples": [
+              "+5516991234567"
+            ],
+            "example": "+5516991234567",
+            "x-apidog-mock": "+5516991234567"
+          },
+          "tipoPessoa": {
+            "$ref": "#/components/schemas/TipoPessoa",
+            "description": "Pessoa física ou jurídica.",
+            "default": "PF",
+            "examples": [
+              "PF"
+            ],
+            "example": "PJ"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id",
+            "description": "Identificador atribuído pelo servidor.",
+            "example": "a2385741-58e7-4eaf-a31c-6a4e7b8a12ab",
+            "x-apidog-mock": "{{$string.uuid}}"
+          },
+          "criadoEm": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criadoem",
+            "description": "Data de criação em UTC.",
+            "example": "2026-11-20T15:00:00.000Z",
+            "x-apidog-mock": "{{$date.recent}}"
+          },
+          "atualizadoEm": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Atualizadoem",
+            "description": "Última alteração em UTC.",
+            "example": "2026-11-20T15:00:00.000Z",
+            "x-apidog-mock": "{{$date.recent}}"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "nome",
+          "email",
+          "telefone",
+          "tipoPessoa",
+          "id",
+          "criadoEm",
+          "atualizadoEm"
+        ],
+        "title": "Cliente",
+        "description": "Contato cadastrado. Todos os campos da resposta são obrigatórios.",
+        "example": {
+          "nome": "Comercial Exemplo Ltda.",
+          "email": "compras@example.com",
+          "telefone": "+5516991234567",
+          "tipoPessoa": "PJ",
+          "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+          "criadoEm": "2026-11-20T17:00:00Z",
+          "atualizadoEm": "2026-11-20T17:00:00Z"
+        }
+      },
+      "CreateClienteDTO": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2,
+            "pattern": "\\S",
+            "title": "Nome",
+            "description": "Nome do contato ou razão social.",
+            "examples": [
+              "Comercial Exemplo Ltda."
+            ],
+            "example": "Comercial Exemplo Ltda.",
+            "x-apidog-mock": "{{$person.fullName}}"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "format": "email",
+            "title": "Email",
+            "description": "E-mail para contato e Reply-To.",
+            "examples": [
+              "compras@example.com"
+            ],
+            "example": "compras@example.com",
+            "x-apidog-mock": "{{$internet.email}}"
+          },
+          "telefone": {
+            "type": "string",
+            "maxLength": 14,
+            "minLength": 13,
+            "pattern": "^\\+55[1-9][0-9][0-9]{8,9}$",
+            "title": "Telefone",
+            "description": "WhatsApp brasileiro com código de país e DDD.",
+            "examples": [
+              "+5516991234567"
+            ],
+            "example": "+5516991234567",
+            "x-apidog-mock": "+5516991234567"
+          },
+          "tipoPessoa": {
+            "$ref": "#/components/schemas/TipoPessoa",
+            "description": "Pessoa física ou jurídica.",
+            "default": "PF",
+            "examples": [
+              "PF"
+            ],
+            "example": "PJ"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "nome",
+          "email",
+          "telefone"
+        ],
+        "title": "CreateClienteDTO",
+        "description": "Dados necessários para cadastrar um contato. E-mails podem se repetir: cada cadastro representa um contato independente.",
+        "example": {
+          "nome": "Comercial Exemplo Ltda.",
+          "email": "compras@example.com",
+          "telefone": "+5516991234567",
+          "tipoPessoa": "PJ"
+        }
+      },
+      "CreateSolicitacaoDTO": {
+        "properties": {
+          "origem": {
+            "$ref": "#/components/schemas/Localidade",
+            "description": "Cidade e UF da coleta.",
+            "example": {
+              "cidade": "Ribeirão Preto",
+              "uf": "SP"
+            }
+          },
+          "destino": {
+            "$ref": "#/components/schemas/Localidade",
+            "description": "Cidade e UF da entrega.",
+            "example": {
+              "cidade": "Campinas",
+              "uf": "SP"
+            }
+          },
+          "descricaoCarga": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "pattern": "\\S",
+            "title": "Descricaocarga",
+            "description": "Conteúdo, embalagem e cuidados com a carga.",
+            "examples": [
+              "20 caixas de peças automotivas embaladas."
+            ],
+            "example": "20 caixas de peças automotivas embaladas.",
+            "x-apidog-mock": "20 caixas de peças automotivas embaladas."
+          },
+          "pesoKg": {
+            "type": "number",
+            "maximum": 30000.0,
+            "minimum": 0.01,
+            "title": "Pesokg",
+            "description": "Peso estimado em quilogramas.",
+            "examples": [
+              350.5
+            ],
+            "example": 350.5,
+            "x-apidog-mock": "350.5"
+          },
+          "dataColeta": {
+            "type": "string",
+            "format": "date",
+            "title": "Datacoleta",
+            "description": "Data desejada, sujeita à confirmação.",
+            "examples": [
+              "2026-12-10"
+            ],
+            "example": "2026-12-10",
+            "x-apidog-mock": "2026-12-10"
+          },
+          "observacoes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observacoes",
+            "description": "Instruções adicionais; null indica ausência.",
+            "examples": [
+              "Coleta em horário comercial."
+            ],
+            "example": "Coleta em horário comercial.",
+            "x-apidog-mock": "Coleta em horário comercial."
+          },
+          "clienteId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Clienteid",
+            "description": "Identificador do cliente existente.",
+            "example": "a2385741-58e7-4eaf-a31c-6a4e7b8a12ab",
+            "x-apidog-mock": "{{$string.uuid}}"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "origem",
+          "destino",
+          "descricaoCarga",
+          "pesoKg",
+          "dataColeta",
+          "clienteId"
+        ],
+        "title": "CreateSolicitacaoDTO",
+        "description": "Solicitação vinculada a um cliente existente. O servidor atribui status RECEBIDA e enfileira um único e-mail; não envie status, id nem statusEmail.",
+        "example": {
+          "origem": {
+            "cidade": "Ribeirão Preto",
+            "uf": "SP"
+          },
+          "destino": {
+            "cidade": "Campinas",
+            "uf": "SP"
+          },
+          "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+          "pesoKg": 350.5,
+          "dataColeta": "2026-12-10",
+          "observacoes": "Coleta em horário comercial.",
+          "clienteId": "c530a965-f481-4d34-a9a6-988be14c0152"
+        }
+      },
+      "InvalidParam": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "name: atributo do contrato InvalidParam.",
+            "example": "nome"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "description": "reason: atributo do contrato InvalidParam.",
+            "example": "Informe ao menos dois caracteres."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "reason"
+        ],
+        "title": "InvalidParam",
+        "description": "Contrato reutilizável de InvalidParam.",
+        "example": {
+          "name": "nome",
+          "reason": "Informe ao menos dois caracteres."
+        }
+      },
+      "ListaClientes": {
+        "properties": {
+          "dados": {
+            "items": {
+              "$ref": "#/components/schemas/Cliente"
+            },
+            "type": "array",
+            "title": "Dados",
+            "description": "Registros da página solicitada.",
+            "example": []
+          },
+          "paginacao": {
+            "$ref": "#/components/schemas/Paginacao",
+            "description": "Metadados de paginação. Lista vazia tem total e totalPaginas iguais a zero.",
+            "example": {
+              "pagina": 1,
+              "limite": 20,
+              "total": 1,
+              "totalPaginas": 1
+            }
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dados",
+          "paginacao"
+        ],
+        "title": "ListaClientes",
+        "description": "Resultado paginado, ordenado por criação decrescente e id crescente em caso de empate.",
+        "example": {
+          "dados": [
+            {
+              "nome": "Comercial Exemplo Ltda.",
+              "email": "compras@example.com",
+              "telefone": "+5516991234567",
+              "tipoPessoa": "PJ",
+              "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+              "criadoEm": "2026-11-20T17:00:00Z",
+              "atualizadoEm": "2026-11-20T17:00:00Z"
+            }
+          ],
+          "paginacao": {
+            "pagina": 1,
+            "limite": 20,
+            "total": 1,
+            "totalPaginas": 1
+          }
+        }
+      },
+      "ListaSolicitacoes": {
+        "properties": {
+          "dados": {
+            "items": {
+              "$ref": "#/components/schemas/SolicitacaoOrcamento"
+            },
+            "type": "array",
+            "title": "Dados",
+            "description": "Registros da página solicitada.",
+            "example": []
+          },
+          "paginacao": {
+            "$ref": "#/components/schemas/Paginacao",
+            "description": "Metadados de paginação. Lista vazia tem total e totalPaginas iguais a zero.",
+            "example": {
+              "pagina": 1,
+              "limite": 20,
+              "total": 1,
+              "totalPaginas": 1
+            }
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dados",
+          "paginacao"
+        ],
+        "title": "ListaSolicitacoes",
+        "description": "Resultado paginado, ordenado por criação decrescente e id crescente em caso de empate.",
+        "example": {
+          "dados": [
+            {
+              "origem": {
+                "cidade": "Ribeirão Preto",
+                "uf": "SP"
+              },
+              "destino": {
+                "cidade": "Campinas",
+                "uf": "SP"
+              },
+              "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+              "pesoKg": 350.5,
+              "dataColeta": "2026-12-10",
+              "observacoes": "Coleta em horário comercial.",
+              "clienteId": "c530a965-f481-4d34-a9a6-988be14c0152",
+              "id": "87792e48-b293-4a91-a767-4a0d19eeaee6",
+              "status": "RECEBIDA",
+              "statusEmail": "PENDENTE",
+              "criadoEm": "2026-11-20T17:00:00Z",
+              "atualizadoEm": "2026-11-20T17:00:00Z"
+            }
+          ],
+          "paginacao": {
+            "pagina": 1,
+            "limite": 20,
+            "total": 1,
+            "totalPaginas": 1
+          }
+        }
+      },
+      "Localidade": {
+        "properties": {
+          "cidade": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2,
+            "pattern": "\\S",
+            "title": "Cidade",
+            "description": "Cidade da coleta ou entrega.",
+            "examples": [
+              "Ribeirão Preto"
+            ],
+            "example": "Ribeirão Preto",
+            "x-apidog-mock": "Ribeirão Preto"
+          },
+          "uf": {
+            "$ref": "#/components/schemas/UF",
+            "description": "Unidade federativa brasileira.",
+            "examples": [
+              "SP"
+            ],
+            "example": "SP",
+            "x-apidog-mock": "SP"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "cidade",
+          "uf"
+        ],
+        "title": "Localidade",
+        "description": "Cidade e UF de coleta ou entrega; o endereço completo será combinado no atendimento.",
+        "example": {
+          "cidade": "Ribeirão Preto",
+          "uf": "SP"
+        }
+      },
+      "LoginRequestDTO": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "format": "email",
+            "title": "Email",
+            "description": "E-mail para contato e Reply-To.",
+            "examples": [
+              "compras@example.com"
+            ],
+            "example": "compras@example.com"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 256,
+            "minLength": 6,
+            "title": "Password",
+            "description": "Senha do operador; nunca devolvida em respostas.",
+            "writeOnly": true,
+            "example": "Exemplo-sem-validade-2026"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "LoginRequestDTO",
+        "description": "Contrato reutilizável de LoginRequestDTO.",
+        "example": {
+          "email": "operador@example.com",
+          "password": "Exemplo-sem-validade-2026"
+        }
+      },
+      "OrcamentoPublicoDTO": {
+        "properties": {
+          "origem": {
+            "$ref": "#/components/schemas/Localidade",
+            "description": "Cidade e UF da coleta.",
+            "example": {
+              "cidade": "Ribeirão Preto",
+              "uf": "SP"
+            }
+          },
+          "destino": {
+            "$ref": "#/components/schemas/Localidade",
+            "description": "Cidade e UF da entrega.",
+            "example": {
+              "cidade": "Campinas",
+              "uf": "SP"
+            }
+          },
+          "descricaoCarga": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "pattern": "\\S",
+            "title": "Descricaocarga",
+            "description": "Conteúdo, embalagem e cuidados com a carga.",
+            "examples": [
+              "20 caixas de peças automotivas embaladas."
+            ],
+            "example": "20 caixas de peças automotivas embaladas."
+          },
+          "pesoKg": {
+            "type": "number",
+            "maximum": 30000.0,
+            "minimum": 0.01,
+            "title": "Pesokg",
+            "description": "Peso estimado em quilogramas.",
+            "examples": [
+              350.5
+            ],
+            "example": 350.5
+          },
+          "dataColeta": {
+            "type": "string",
+            "format": "date",
+            "title": "Datacoleta",
+            "description": "Data desejada, sujeita à confirmação.",
+            "examples": [
+              "2026-12-10"
+            ],
+            "example": "2026-12-10"
+          },
+          "observacoes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observacoes",
+            "description": "Instruções adicionais; null indica ausência.",
+            "examples": [
+              "Coleta em horário comercial."
+            ],
+            "example": "Coleta em horário comercial."
+          },
+          "cliente": {
+            "$ref": "#/components/schemas/CreateClienteDTO",
+            "description": "Dados do contato que solicita o orçamento.",
+            "example": {
+              "nome": "Comercial Exemplo Ltda.",
+              "email": "compras@example.com",
+              "telefone": "+5516991234567",
+              "tipoPessoa": "PJ"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "origem",
+          "destino",
+          "descricaoCarga",
+          "pesoKg",
+          "dataColeta",
+          "cliente"
+        ],
+        "title": "OrcamentoPublicoDTO",
+        "description": "Contrato reutilizável de OrcamentoPublicoDTO.",
+        "example": {
+          "origem": {
+            "cidade": "Ribeirão Preto",
+            "uf": "SP"
+          },
+          "destino": {
+            "cidade": "Campinas",
+            "uf": "SP"
+          },
+          "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+          "pesoKg": 350.5,
+          "dataColeta": "2026-12-10",
+          "observacoes": "Coleta em horário comercial.",
+          "cliente": {
+            "nome": "Comercial Exemplo Ltda.",
+            "email": "compras@example.com",
+            "telefone": "+5516991234567",
+            "tipoPessoa": "PJ"
+          }
+        }
+      },
+      "OrcamentoRecebido": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id",
+            "description": "Protocolo para acompanhamento com a empresa.",
+            "example": "87792e48-b293-4a91-a767-4a0d19eeaee6",
+            "x-apidog-mock": "{{$string.uuid}}"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusSolicitacao",
+            "default": "RECEBIDA",
+            "description": "status: atributo do contrato OrcamentoRecebido.",
+            "example": "RECEBIDA"
+          },
+          "statusEmail": {
+            "$ref": "#/components/schemas/StatusEmail",
+            "default": "PENDENTE",
+            "description": "statusEmail: atributo do contrato OrcamentoRecebido.",
+            "example": "PENDENTE"
+          },
+          "mensagem": {
+            "type": "string",
+            "title": "Mensagem",
+            "description": "Confirmação do registro, sem prometer entrega de e-mail.",
+            "example": "Solicitação registrada."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "statusEmail",
+          "mensagem"
+        ],
+        "title": "OrcamentoRecebido",
+        "description": "Contrato reutilizável de OrcamentoRecebido.",
+        "example": {
+          "id": "87792e48-b293-4a91-a767-4a0d19eeaee6",
+          "status": "RECEBIDA",
+          "statusEmail": "PENDENTE",
+          "mensagem": "Solicitação registrada."
+        }
+      },
+      "Paginacao": {
+        "properties": {
+          "pagina": {
+            "type": "integer",
+            "maximum": 1000000.0,
+            "minimum": 1.0,
+            "title": "Pagina",
+            "description": "Página atual, iniciando em 1.",
+            "example": 1
+          },
+          "limite": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Limite",
+            "description": "Máximo de registros por página.",
+            "example": 20
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Total",
+            "description": "Quantidade de registros após aplicar os filtros.",
+            "example": 1
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Totalpaginas",
+            "description": "Teto de total dividido por limite; zero quando não há registros.",
+            "example": 1
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "pagina",
+          "limite",
+          "total",
+          "totalPaginas"
+        ],
+        "title": "Paginacao",
+        "description": "Metadados de paginação. Lista vazia tem total e totalPaginas iguais a zero.",
+        "example": {
+          "pagina": 1,
+          "limite": 20,
+          "total": 1,
+          "totalPaginas": 1
+        }
+      },
+      "Papel": {
+        "type": "string",
+        "enum": [
+          "ADMIN",
+          "MEMBER"
+        ],
+        "title": "Papel",
+        "description": "Contrato reutilizável de Papel."
+      },
+      "SolicitacaoOrcamento": {
+        "properties": {
+          "origem": {
+            "$ref": "#/components/schemas/Localidade",
+            "description": "Cidade e UF da coleta.",
+            "example": {
+              "cidade": "Ribeirão Preto",
+              "uf": "SP"
+            }
+          },
+          "destino": {
+            "$ref": "#/components/schemas/Localidade",
+            "description": "Cidade e UF da entrega.",
+            "example": {
+              "cidade": "Campinas",
+              "uf": "SP"
+            }
+          },
+          "descricaoCarga": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "pattern": "\\S",
+            "title": "Descricaocarga",
+            "description": "Conteúdo, embalagem e cuidados com a carga.",
+            "examples": [
+              "20 caixas de peças automotivas embaladas."
+            ],
+            "example": "20 caixas de peças automotivas embaladas.",
+            "x-apidog-mock": "20 caixas de peças automotivas embaladas."
+          },
+          "pesoKg": {
+            "type": "number",
+            "maximum": 30000.0,
+            "minimum": 0.01,
+            "title": "Pesokg",
+            "description": "Peso estimado em quilogramas.",
+            "examples": [
+              350.5
+            ],
+            "example": 350.5,
+            "x-apidog-mock": "350.5"
+          },
+          "dataColeta": {
+            "type": "string",
+            "format": "date",
+            "title": "Datacoleta",
+            "description": "Data desejada, sujeita à confirmação.",
+            "examples": [
+              "2026-12-10"
+            ],
+            "example": "2026-12-10",
+            "x-apidog-mock": "2026-12-10"
+          },
+          "observacoes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observacoes",
+            "description": "Instruções adicionais; null indica ausência.",
+            "examples": [
+              "Coleta em horário comercial."
+            ],
+            "example": "Coleta em horário comercial.",
+            "x-apidog-mock": "Coleta em horário comercial."
+          },
+          "clienteId": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Clienteid",
+            "description": "Identificador do cliente existente.",
+            "example": "a2385741-58e7-4eaf-a31c-6a4e7b8a12ab",
+            "x-apidog-mock": "{{$string.uuid}}"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id",
+            "description": "Protocolo da solicitação.",
+            "example": "a2385741-58e7-4eaf-a31c-6a4e7b8a12ab",
+            "x-apidog-mock": "{{$string.uuid}}"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusSolicitacao",
+            "description": "Situação comercial.",
+            "example": "RECEBIDA"
+          },
+          "statusEmail": {
+            "$ref": "#/components/schemas/StatusEmail",
+            "description": "Situação do envio da notificação, sem garantir leitura.",
+            "example": "PENDENTE"
+          },
+          "criadoEm": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criadoem",
+            "description": "Criação em UTC.",
+            "example": "2026-11-20T15:00:00.000Z",
+            "x-apidog-mock": "{{$date.recent}}"
+          },
+          "atualizadoEm": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Atualizadoem",
+            "description": "Última alteração em UTC.",
+            "example": "2026-11-20T15:00:00.000Z",
+            "x-apidog-mock": "{{$date.recent}}"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "origem",
+          "destino",
+          "descricaoCarga",
+          "pesoKg",
+          "dataColeta",
+          "observacoes",
+          "clienteId",
+          "id",
+          "status",
+          "statusEmail",
+          "criadoEm",
+          "atualizadoEm"
+        ],
+        "title": "SolicitacaoOrcamento",
+        "description": "Pedido de cotação e estado da notificação; não representa frete contratado.",
+        "example": {
+          "origem": {
+            "cidade": "Ribeirão Preto",
+            "uf": "SP"
+          },
+          "destino": {
+            "cidade": "Campinas",
+            "uf": "SP"
+          },
+          "descricaoCarga": "20 caixas de peças automotivas embaladas.",
+          "pesoKg": 350.5,
+          "dataColeta": "2026-12-10",
+          "observacoes": "Coleta em horário comercial.",
+          "clienteId": "c530a965-f481-4d34-a9a6-988be14c0152",
+          "id": "87792e48-b293-4a91-a767-4a0d19eeaee6",
+          "status": "RECEBIDA",
+          "statusEmail": "PENDENTE",
+          "criadoEm": "2026-11-20T17:00:00Z",
+          "atualizadoEm": "2026-11-20T17:00:00Z"
+        }
+      },
+      "StatusEmail": {
+        "type": "string",
+        "enum": [
+          "PENDENTE",
+          "ENVIADO",
+          "FALHOU"
+        ],
+        "title": "StatusEmail",
+        "description": "PENDENTE: em fila, inclusive sem SMTP configurado; ENVIADO: aceito pelo servidor SMTP (não confirma entrega na caixa de entrada); FALHOU: tentativa rejeitada, com reenvio automático. Apenas leitura."
+      },
+      "StatusSolicitacao": {
+        "type": "string",
+        "enum": [
+          "RECEBIDA",
+          "EM_ANALISE",
+          "COTADA",
+          "CANCELADA"
+        ],
+        "title": "StatusSolicitacao",
+        "description": "RECEBIDA: aguardando análise; EM_ANALISE: em atendimento; COTADA: cotação preparada; CANCELADA: atendimento encerrado sem cotação."
+      },
+      "TipoPessoa": {
+        "type": "string",
+        "enum": [
+          "PF",
+          "PJ"
+        ],
+        "title": "TipoPessoa",
+        "description": "PF: pessoa física; PJ: pessoa jurídica."
+      },
+      "TokenResponseDTO": {
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "title": "Accesstoken",
+            "description": "JWT assinado HS256 com duração limitada.",
+            "example": "JWT_EXEMPLO_SEM_VALIDADE"
+          },
+          "tokenType": {
+            "type": "string",
+            "title": "Tokentype",
+            "default": "bearer",
+            "description": "tokenType: atributo do contrato TokenResponseDTO.",
+            "example": "bearer"
+          },
+          "expiresIn": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expiresin",
+            "default": 3600,
+            "description": "expiresIn: atributo do contrato TokenResponseDTO.",
+            "example": 3600
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserResponse",
+            "description": "user: atributo do contrato TokenResponseDTO.",
+            "example": {
+              "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+              "name": "Operador de exemplo",
+              "email": "operador@example.com",
+              "role": "ADMIN"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "accessToken",
+          "tokenType",
+          "expiresIn",
+          "user"
+        ],
+        "title": "TokenResponseDTO",
+        "description": "Contrato reutilizável de TokenResponseDTO.",
+        "example": {
+          "accessToken": "JWT_EXEMPLO_SEM_VALIDADE",
+          "tokenType": "bearer",
+          "expiresIn": 3600,
+          "user": {
+            "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+            "name": "Operador de exemplo",
+            "email": "operador@example.com",
+            "role": "ADMIN"
+          }
+        }
+      },
+      "UF": {
+        "type": "string",
+        "enum": [
+          "AC",
+          "AL",
+          "AP",
+          "AM",
+          "BA",
+          "CE",
+          "DF",
+          "ES",
+          "GO",
+          "MA",
+          "MT",
+          "MS",
+          "MG",
+          "PA",
+          "PB",
+          "PR",
+          "PE",
+          "PI",
+          "RJ",
+          "RN",
+          "RS",
+          "RO",
+          "RR",
+          "SC",
+          "SP",
+          "SE",
+          "TO"
+        ],
+        "title": "UF",
+        "description": "Contrato reutilizável de UF."
+      },
+      "UpdateClienteDTO": {
+        "properties": {
+          "nome": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2,
+            "pattern": "\\S",
+            "title": "Nome",
+            "description": "Nome do contato ou razão social.",
+            "examples": [
+              "Comercial Exemplo Ltda."
+            ],
+            "example": "Comercial Exemplo Ltda.",
+            "x-apidog-mock": "{{$person.fullName}}"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "format": "email",
+            "title": "Email",
+            "description": "E-mail para contato e Reply-To.",
+            "examples": [
+              "compras@example.com"
+            ],
+            "example": "compras@example.com",
+            "x-apidog-mock": "{{$internet.email}}"
+          },
+          "telefone": {
+            "type": "string",
+            "maxLength": 14,
+            "minLength": 13,
+            "pattern": "^\\+55[1-9][0-9][0-9]{8,9}$",
+            "title": "Telefone",
+            "description": "WhatsApp brasileiro com código de país e DDD.",
+            "examples": [
+              "+5516991234567"
+            ],
+            "example": "+5516991234567",
+            "x-apidog-mock": "+5516991234567"
+          },
+          "tipoPessoa": {
+            "$ref": "#/components/schemas/TipoPessoa",
+            "description": "PF: pessoa física; PJ: pessoa jurídica.",
+            "example": "PJ"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "minProperties": 1,
+        "title": "UpdateClienteDTO",
+        "description": "Atualização parcial: omitir preserva o valor; null não é aceito. Informe pelo menos um campo.",
+        "example": {
+          "nome": "Contato atualizado"
+        }
+      },
+      "UpdateSolicitacaoDTO": {
+        "properties": {
+          "origem": {
+            "$ref": "#/components/schemas/Localidade",
+            "description": "Cidade e UF de coleta ou entrega; o endereço completo será combinado no atendimento."
+          },
+          "destino": {
+            "$ref": "#/components/schemas/Localidade",
+            "description": "Cidade e UF de coleta ou entrega; o endereço completo será combinado no atendimento."
+          },
+          "descricaoCarga": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "pattern": "\\S",
+            "title": "Descricaocarga",
+            "description": "Conteúdo, embalagem e cuidados com a carga.",
+            "examples": [
+              "20 caixas de peças automotivas embaladas."
+            ],
+            "example": "20 caixas de peças automotivas embaladas.",
+            "x-apidog-mock": "20 caixas de peças automotivas embaladas."
+          },
+          "pesoKg": {
+            "type": "number",
+            "maximum": 30000.0,
+            "minimum": 0.01,
+            "title": "Pesokg",
+            "description": "Peso estimado em quilogramas.",
+            "examples": [
+              350.5
+            ],
+            "example": 350.5,
+            "x-apidog-mock": "350.5"
+          },
+          "dataColeta": {
+            "type": "string",
+            "format": "date",
+            "title": "Datacoleta",
+            "description": "Data desejada para coleta, sujeita à confirmação da empresa.",
+            "example": "2026-12-10",
+            "x-apidog-mock": "2026-12-10"
+          },
+          "observacoes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observacoes",
+            "description": "Informações complementares. Ausência na criação vira null; null no PATCH limpa o campo.",
+            "example": "Coleta em horário comercial.",
+            "x-apidog-mock": "Coleta em horário comercial."
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusSolicitacao",
+            "description": "RECEBIDA: aguardando análise; EM_ANALISE: em atendimento; COTADA: cotação preparada; CANCELADA: atendimento encerrado sem cotação.",
+            "example": "RECEBIDA"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "minProperties": 1,
+        "title": "UpdateSolicitacaoDTO",
+        "description": "Atualização parcial. Localidades são substituídas por inteiro. clienteId não pode ser alterado. Não dispara outro e-mail; a notificação contém os dados capturados na criação.",
+        "example": {
+          "status": "EM_ANALISE"
+        }
+      },
+      "UserResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id",
+            "description": "id: atributo do contrato UserResponse.",
+            "example": "c530a965-f481-4d34-a9a6-988be14c0152",
+            "x-apidog-mock": "{{$string.uuid}}"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "name: atributo do contrato UserResponse.",
+            "example": "Operador de exemplo"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "format": "email",
+            "title": "Email",
+            "description": "E-mail para contato e Reply-To.",
+            "examples": [
+              "compras@example.com"
+            ],
+            "example": "compras@example.com"
+          },
+          "role": {
+            "$ref": "#/components/schemas/Papel",
+            "description": "role: atributo do contrato UserResponse.",
+            "example": "ADMIN"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role"
+        ],
+        "title": "UserResponse",
+        "description": "Contrato reutilizável de UserResponse.",
+        "example": {
+          "id": "c530a965-f481-4d34-a9a6-988be14c0152",
+          "name": "Operador de exemplo",
+          "email": "operador@example.com",
+          "role": "ADMIN"
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://donitransportes.com.br",
+      "description": "Site e proxy de produção"
+    },
+    {
+      "url": "http://127.0.0.1:8000",
+      "description": "Execução local"
+    }
+  ]
+}
